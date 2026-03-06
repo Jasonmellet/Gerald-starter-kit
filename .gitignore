@@ -1,0 +1,30 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Agent state and memory — personal, do not share (keep .gitkeep so dirs exist in clone)
+memory/*
+!memory/.gitkeep
+
+# Generated and ingested content
+outputs/*
+!outputs/.gitkeep
+sources/*
+!sources/.gitkeep
+
+# OpenClaw workspace state (local only)
+.openclaw/
+
+# Personal notes and one-off files — keep local only
+notes.md
+ideas.txt
+sample.csv
+summary.md
+jason.md
+
+# OS and editor
+.DS_Store
+*.swp
+*.swo
+*~
