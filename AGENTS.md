@@ -196,6 +196,14 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 
 **Tip:** Batch similar periodic checks into `HEARTBEAT.md` instead of creating multiple cron jobs. Use cron for precise schedules and standalone tasks.
 
+### Cron and automation — you cannot activate them
+
+You can **create** cron scripts, crontab snippets, and automation files (e.g. `tools/install_cron.sh`, `tools/setup_cron.sh`, or new scripts). You **cannot** run shell commands (exec/bash are disabled), so you **cannot** install crontabs or run install scripts yourself.
+
+- **Do:** Create or edit the script and/or crontab *content* (e.g. write a file with the cron lines or update `tools/install_cron.sh`).
+- **Do:** Tell the user exactly what **they** must run to activate (e.g. “Run this in your terminal: `bash tools/install_cron.sh`” or “Add these lines with `crontab -e`: …”).
+- **Do not:** Say the cron job or automation is “installed”, “active”, “running”, or “set up” until the user has run the activation command. Say instead: “I’ve created the script and crontab entries. **To activate**, run in your terminal: …”
+
 **Things to check (rotate through these, 2-4 times per day):**
 
 - **Emails** - Any urgent unread messages?

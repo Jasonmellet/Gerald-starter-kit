@@ -3,6 +3,10 @@
 .env.local
 .env.*.local
 
+# Credentials and API keys
+credentials/*
+!credentials/.gitkeep
+
 # Agent state and memory — personal, do not share (keep .gitkeep so dirs exist in clone)
 memory/*
 !memory/.gitkeep
