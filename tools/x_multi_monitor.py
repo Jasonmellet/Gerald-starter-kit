@@ -46,7 +46,8 @@ MONITORED_USERS = {
     "neilpatel": "Marketing, SEO, business growth strategies",
     "dataforseo": "SEO data, API updates, research tools",
     "steipete": "Peter Steinberger - OpenClaw creator",
-    "gregisenberg": "Tech updates, tips and tricks"
+    "gregisenberg": "Tech updates, tips and tricks",
+    "jakezward": "SEO, AI search, SaaS growth strategies"
 }
 
 
