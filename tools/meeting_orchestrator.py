@@ -130,13 +130,13 @@ class MeetingOrchestrator:
         finally:
             self._save_state()
     
-    def run_once(self):
-        """Run a single poll cycle (for testing)."""
+    def run_once(self, recheck_all: bool = False):
+        """Run a single poll cycle (for cron/LaunchAgent). If recheck_all, re-evaluate every invite."""
         if not self.recall:
             if not self.initialize():
                 return
-        
-        self._poll_cycle()
+        self._poll_cycle(recheck_all=recheck_all)
+        self._save_state()
     
     def _get_dynamic_poll_interval(self) -> int:
         """Calculate polling interval based on upcoming meetings."""
@@ -166,15 +166,15 @@ class MeetingOrchestrator:
         
         return default_interval
     
-    def _poll_cycle(self):
+    def _poll_cycle(self, recheck_all: bool = False):
         """One complete poll cycle."""
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Polling...")
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Polling..." + (" (recheck all)" if recheck_all else ""))
         
         # Step 1: Check for completed bots
         self._check_completed_bots()
         
         # Step 2: Check Gmail for new invites
-        self._check_new_invites()
+        self._check_new_invites(recheck_all=recheck_all)
         
         # Step 3: Check for updated invites (reschedules)
         self._check_updated_invites()
@@ -223,24 +223,27 @@ class MeetingOrchestrator:
         except Exception as e:
             print(f"Error checking updated invites: {e}")
     
-    def _check_new_invites(self):
-        """Check Gmail for new calendar invites."""
+    def _check_new_invites(self, recheck_all: bool = False):
+        """Check Gmail for new calendar invites. If recheck_all, re-evaluate every invite (e.g. to join a meeting that was skipped)."""
         try:
-            invites = self.gmail.get_calendar_invites(max_results=20)
+            invites = self.gmail.get_calendar_invites(max_results=50)
             
             new_invites = 0
             for invite in invites:
                 msg_id = invite.get('message_id')
                 
-                # Skip already processed
-                if msg_id in self.processed_invites:
+                # Skip already processed (unless recheck_all)
+                if not recheck_all and msg_id in self.processed_invites:
                     continue
                 
                 meeting_url = invite.get('meeting_url')
                 if not meeting_url:
                     continue
                 
-                print(f"New invite: {invite.get('subject', 'Unknown')}")
+                if not recheck_all:
+                    print(f"New invite: {invite.get('subject', 'Unknown')}")
+                else:
+                    print(f"Recheck invite: {invite.get('subject', 'Unknown')}")
                 print(f"  URL: {meeting_url}")
                 
                 # Check if we should join this meeting
@@ -592,6 +595,11 @@ def main():
         return
 
     orchestrator = MeetingOrchestrator()
+    if "--once" in sys.argv:
+        # Single poll cycle then exit (for cron/LaunchAgent). --recheck re-evaluates all invites.
+        recheck = "--recheck" in sys.argv
+        orchestrator.run_once(recheck_all=recheck)
+        return
     orchestrator.run()
 
 

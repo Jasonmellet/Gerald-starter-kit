@@ -215,6 +215,34 @@ class GmailClient:
                 return header.get('value', default)
         return default
     
+    def _ical_datetime_to_iso(self, value: str) -> Optional[str]:
+        """Convert iCal datetime (e.g. 20260311T193000Z or 20260311T143000) to ISO for fromisoformat()."""
+        if not value or len(value) < 15:
+            return None
+        # Value may have params: DTSTART;TZID=...:VALUE -> use part after last ':'
+        raw = value.split(':')[-1].strip()
+        if not raw:
+            return None
+        # 20260311T193000Z or 20260311T143000
+        is_utc = raw.endswith('Z')
+        if is_utc:
+            raw = raw[:-1]
+        if len(raw) >= 15 and 'T' in raw:
+            try:
+                # YYYYMMDDTHHMMSS -> YYYY-MM-DDTHH:MM:SS
+                date_part, time_part = raw.split('T', 1)
+                y, m, d = date_part[:4], date_part[4:6], date_part[6:8]
+                h = time_part[:2] if len(time_part) >= 2 else '00'
+                mi = time_part[2:4] if len(time_part) >= 4 else '00'
+                s = time_part[4:6] if len(time_part) >= 6 else '00'
+                iso = f"{y}-{m}-{d}T{h}:{mi}:{s}"
+                if is_utc:
+                    iso += "+00:00"
+                return iso
+            except Exception:
+                pass
+        return None
+
     def _parse_ics(self, ics_data: str) -> Dict[str, Any]:
         """Parse iCalendar (.ics) data to extract meeting info."""
         info = {}
@@ -229,10 +257,16 @@ class GmailClient:
             elif line == 'END:VEVENT':
                 in_vevent = False
             elif in_vevent:
-                if line.startswith('DTSTART:'):
-                    info['start_time'] = line.replace('DTSTART:', '')
-                elif line.startswith('DTEND:'):
-                    info['end_time'] = line.replace('DTEND:', '')
+                if line.startswith('DTSTART'):
+                    raw = line[line.rfind(':') + 1:] if ':' in line else ''
+                    iso = self._ical_datetime_to_iso(raw)
+                    if iso:
+                        info['start_time'] = iso
+                elif line.startswith('DTEND'):
+                    raw = line[line.rfind(':') + 1:] if ':' in line else ''
+                    iso = self._ical_datetime_to_iso(raw)
+                    if iso:
+                        info['end_time'] = iso
                 elif line.startswith('ORGANIZER'):
                     # Extract email from ORGANIZER;CN=Name:mailto:email@example.com
                     if 'mailto:' in line:

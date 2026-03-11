@@ -53,14 +53,14 @@ class RecallAIClient:
             "Content-Type": "application/json"
         }
     
-    def create_bot(self, meeting_url: str, name: str = "Gerald", transcription: bool = False) -> Dict[str, Any]:
+    def create_bot(self, meeting_url: str, name: str = "Gerald", transcription: bool = True) -> Dict[str, Any]:
         """
         Create a bot to join a meeting.
         
         Args:
             meeting_url: The meeting URL (Zoom, Google Meet, Teams, etc.)
             name: Display name for the bot in the meeting
-            transcription: Whether to enable transcription (requires AssemblyAI credentials)
+            transcription: Whether to enable transcription (default True; uses Recall's built-in provider).
             
         Returns:
             Bot object with id, status, etc.
@@ -69,11 +69,10 @@ class RecallAIClient:
             "meeting_url": meeting_url,
             "bot_name": name
         }
-        
-        # Only add transcription if explicitly requested and credentials are configured
+        # Enable built-in transcription so we get transcripts for summary emails (no third-party credentials).
         if transcription:
             payload["transcription_options"] = {
-                "provider": "assembly_ai"
+                "provider": "recallai"
             }
         
         response = requests.post(
@@ -122,28 +121,53 @@ class RecallAIClient:
     def get_transcript(self, bot_id: str) -> Optional[List[Dict[str, Any]]]:
         """
         Get transcript for a completed bot session.
-        
-        Returns:
-            List of transcript segments with speaker and text,
-            or None if transcript not ready.
+        Uses Recall's transcript artifact API: bot -> recording.media_shortcuts.transcript -> GET transcript/{id}/ -> download_url.
+        Returns list of segments with 'speaker' and 'text' for meeting_processor.
         """
         bot = self.get_bot(bot_id)
-        
-        # Check if bot has finished and has transcript
         if bot.get("status") != "done":
             return None
-        
-        # Get transcript via the transcript endpoint
-        response = requests.get(
-            f"{self.BASE_URL}/bot/{bot_id}/transcript",
+
+        recordings = bot.get("recordings") or []
+        if not recordings:
+            return None
+        media = recordings[0].get("media_shortcuts") or {}
+        transcript_artifact = media.get("transcript")
+        if not isinstance(transcript_artifact, dict):
+            return None
+        transcript_id = transcript_artifact.get("id")
+        if not transcript_id:
+            return None
+
+        # GET transcript artifact (new API)
+        resp = requests.get(
+            f"{self.BASE_URL}/transcript/{transcript_id}/",
             headers=self.headers
         )
-        
-        if response.status_code == 404:
+        if resp.status_code != 200:
             return None
-            
-        response.raise_for_status()
-        return response.json()
+        artifact = resp.json()
+        download_url = (artifact.get("data") or {}).get("download_url")
+        if not download_url:
+            return None
+
+        # Fetch actual transcript JSON (list of {participant, words})
+        down = requests.get(download_url)
+        down.raise_for_status()
+        raw = down.json()
+        if not isinstance(raw, list):
+            return None
+
+        # Convert to [{speaker, text}, ...] for meeting_processor
+        segments = []
+        for item in raw:
+            participant = item.get("participant") or {}
+            name = participant.get("name") or "Unknown"
+            words = item.get("words") or []
+            text = " ".join(w.get("text", "") for w in words).strip()
+            if text:
+                segments.append({"speaker": name, "text": text})
+        return segments if segments else None
     
     def wait_for_completion(self, bot_id: str, timeout: int = 3600, poll_interval: int = 30) -> bool:
         """

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.openclaw.meeting-orchestrator</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/python3</string>
+		<string>{{REPO_ROOT}}/tools/meeting_orchestrator.py</string>
+		<string>--once</string>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>{{REPO_ROOT}}</string>
+	<key>StartInterval</key>
+	<integer>300</integer>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>{{REPO_ROOT}}/logs/meeting_orchestrator_launchd.log</string>
+	<key>StandardErrorPath</key>
+	<string>{{REPO_ROOT}}/logs/meeting_orchestrator_launchd.err</string>
+</dict>
+</plist>

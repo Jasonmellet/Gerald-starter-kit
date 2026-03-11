@@ -65,3 +65,4 @@ Recall’s API often **does not** allow deleting bots that have already joined o
 | Free existing 30+ bots | You: Recall dashboard or `recall_cleanup.py` (leave_call for running bots) |
 | Gerald joins meetings | Default: just run `meeting_orchestrator.py` (or cron it). No .env toggle. |
 | Pause joining (e.g. vacation) | Set `RECALL_JOIN_ENABLED=false` in `.env` |
+| Run orchestrator automatically (no manual start) | See **RECALL-AUTO-RUN.md** — one-time install of LaunchAgent. |
