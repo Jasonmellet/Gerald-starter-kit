@@ -19,8 +19,23 @@ Scans multiple sources for potential clients needing:
 - LinkedIn (via Playwright automation)
 - Upwork job feeds
 - Hacker News "Who's Hiring"
-- Twitter/X search
+- **X (Twitter)** — lead feed in workspace: `memory/x_lead_feed.json`
 - IndieHackers
+
+### X (Twitter) direct lead feed
+
+When the user asks for **new customers** or **leads from X/Twitter**:
+
+1. **Read** `memory/x_lead_feed.json` (in workspace root). It contains recent tweets from search queries like "fractional CMO", "looking for marketing help", "AI agent builder".
+2. **Rank** leads by fit (keywords), engagement (likes/replies), and recency. Suggest top 5–10.
+3. **Output** for each: @username, why they're a fit, suggested DM or reply (1–2 sentences).
+4. If the file is missing or empty: tell the user to run once (or on a schedule):  
+   `python3 tools/x_lead_feed.py`  
+   They need `X_BEARER_TOKEN` in the repo root `.env`. See `X-LEAD-PLAN.md` for full flow.
+
+**Sending DMs to leads:** If the user wants to reach out on X, they can send a DM with:  
+`python3 tools/x_dm.py @username "Your message"`  
+Requires OAuth with DM scope (run the X OAuth flow once; see `X-CALLBACK-SETUP.md`).
 
 ### 2. Lead Scoring
 Ranks opportunities by:

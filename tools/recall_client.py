@@ -84,28 +84,40 @@ class RecallAIClient:
         response.raise_for_status()
         return response.json()
     
+    @staticmethod
+    def _current_status(bot: Dict[str, Any]) -> str:
+        """Derive current status from status_changes (Recall API has no top-level status)."""
+        changes = bot.get("status_changes") or []
+        if not changes:
+            return "unknown"
+        return (changes[-1].get("code") or "unknown").lower()
+
     def get_bot(self, bot_id: str) -> Dict[str, Any]:
-        """Get bot status and details."""
+        """Get bot status and details. Adds computed 'status' from last status_changes event."""
         response = requests.get(
             f"{self.BASE_URL}/bot/{bot_id}",
             headers=self.headers
         )
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+        data["status"] = self._current_status(data)
+        return data
     
     def list_bots(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List all bots, optionally filtered by status."""
+        """List all bots. Adds computed 'status' from last status_changes event."""
         params = {}
         if status:
             params["status"] = status
-            
         response = requests.get(
             f"{self.BASE_URL}/bot",
             headers=self.headers,
             params=params
         )
         response.raise_for_status()
-        return response.json().get("results", [])
+        results = response.json().get("results", [])
+        for bot in results:
+            bot["status"] = self._current_status(bot)
+        return results
     
     def get_transcript(self, bot_id: str) -> Optional[List[Dict[str, Any]]]:
         """
@@ -162,13 +174,30 @@ class RecallAIClient:
         print(f"Timeout waiting for bot {bot_id}")
         return False
     
+    def leave_call(self, bot_id: str) -> bool:
+        """Tell the bot to leave the call immediately. Frees the slot once it ends."""
+        try:
+            response = requests.post(
+                f"{self.BASE_URL}/bot/{bot_id}/leave_call/",
+                headers=self.headers,
+            )
+            return response.status_code == 200
+        except Exception:
+            return False
+
     def delete_bot(self, bot_id: str) -> bool:
-        """Delete a bot and clean up resources."""
-        response = requests.delete(
-            f"{self.BASE_URL}/bot/{bot_id}",
-            headers=self.headers
-        )
-        return response.status_code == 204
+        """Delete a bot and clean up resources. Recall may only allow delete for bots that have not yet joined."""
+        try:
+            response = requests.delete(
+                f"{self.BASE_URL}/bot/{bot_id}",
+                headers=self.headers
+            )
+            if response.status_code != 204:
+                # Recall often returns 405 for bots that already joined/completed
+                return False
+            return True
+        except Exception:
+            return False
 
 
 def test_connection():

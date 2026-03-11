@@ -244,10 +244,16 @@ class MeetingOrchestrator:
                 print(f"  URL: {meeting_url}")
                 
                 # Check if we should join this meeting
-                if self._should_join_meeting(invite):
+                should_join = self._should_join_meeting(invite)
+                if should_join:
                     self._schedule_bot(invite)
-                
-                self.processed_invites.add(msg_id)
+                # Mark as processed only when we don't need to re-check: we joined, meeting ended, or we already have a bot for this invite
+                already_has_bot = any(
+                    info.get('invite', {}).get('message_id') == msg_id
+                    for info in self.active_bots.values()
+                )
+                if should_join or self._invite_already_ended(invite) or already_has_bot:
+                    self.processed_invites.add(msg_id)
                 new_invites += 1
             
             if new_invites > 0:
@@ -256,6 +262,18 @@ class MeetingOrchestrator:
         except Exception as e:
             print(f"Error checking invites: {e}")
     
+    def _invite_already_ended(self, invite: Dict[str, Any]) -> bool:
+        """True if meeting has ended (so we can mark as processed and stop re-checking)."""
+        end_time = invite.get('end_time') or invite.get('start_time')
+        if not end_time:
+            return False
+        try:
+            end_dt = datetime.fromisoformat(end_time.replace('Z', '+00:00'))
+            now = datetime.now(end_dt.tzinfo)
+            return now > end_dt
+        except Exception:
+            return False
+
     def _should_join_meeting(self, invite: Dict[str, Any]) -> bool:
         """
         Determine if we should join a meeting.
@@ -292,6 +310,11 @@ class MeetingOrchestrator:
                         old_bot_id = bid
                         break
                 if old_bot_id:
+                    try:
+                        self.recall.delete_bot(old_bot_id)
+                        print(f"  Deleted replaced bot {old_bot_id[:8]}... (reschedule)")
+                    except Exception as e:
+                        print(f"  Warning: could not delete old bot: {e}")
                     del self.active_bots[old_bot_id]
                 if meeting_url in self.scheduled_meetings:
                     del self.scheduled_meetings[meeting_url]
@@ -315,31 +338,40 @@ class MeetingOrchestrator:
                     except:
                         pass
                 
-                # Join if meeting is happening now or within next 30 minutes
-                # Or if it started up to 15 minutes ago (for delayed starts/reschedules)
+                # Only join when meeting is within window (avoids runaway joins; configurable)
+                # RECALL_JOIN_WINDOW_MINUTES = how many min before start we create bot (default 15); RECALL_JOIN_GRACE_MINUTES = how long after start we still join (default 5)
+                window_min = int(os.environ.get("RECALL_JOIN_WINDOW_MINUTES", "15"))
+                grace_min = int(os.environ.get("RECALL_JOIN_GRACE_MINUTES", "5"))
+                window_sec = window_min * 60
+                grace_sec = -grace_min * 60
                 time_diff = (meeting_dt - now).total_seconds()
                 
-                if time_diff > 1800:  # More than 30 minutes in future
-                    print(f"  Scheduling for later (starts in {time_diff/60:.0f} minutes)")
+                if time_diff > window_sec:
+                    print(f"  Skipping - starts in {time_diff/60:.0f} min (window={window_min} min)")
                     return False
-                elif time_diff < -900:  # More than 15 minutes ago
-                    print(f"  Skipping - meeting started {abs(time_diff)/60:.0f} minutes ago")
+                elif time_diff < grace_sec:
+                    print(f"  Skipping - started {abs(time_diff)/60:.0f} min ago (grace={grace_min} min)")
                     return False
                 else:
-                    # Meeting is now, upcoming soon, or recently started
                     if time_diff < 0:
-                        print(f"  Joining - meeting already started ({abs(time_diff)/60:.0f} min ago)")
+                        print(f"  Joining - meeting started {abs(time_diff)/60:.0f} min ago")
                     else:
-                        print(f"  Joining - meeting starts in {time_diff/60:.0f} minutes")
+                        print(f"  Joining - meeting starts in {time_diff/60:.0f} min")
                     return True
                     
             except Exception as e:
                 print(f"  Warning: Could not parse meeting time: {e}")
+                return False
         
-        return True
+        # No start_time or could not parse: do NOT join (was wrongly defaulting to True and joining everything)
+        print(f"  Skipping - no valid start_time in invite")
+        return False
     
     def _schedule_bot(self, invite: Dict[str, Any]):
-        """Schedule a Recall.ai bot to join a meeting."""
+        """Schedule a Recall.ai bot to join a meeting. (Set RECALL_JOIN_ENABLED=false only to pause joining, e.g. vacation.)"""
+        if os.environ.get("RECALL_JOIN_ENABLED", "true").lower() in ("0", "false", "no", "off"):
+            print("  Skipping - RECALL_JOIN_ENABLED is off")
+            return
         meeting_url = invite.get('meeting_url')
         subject = invite.get('subject', 'Meeting')
         
@@ -394,7 +426,7 @@ class MeetingOrchestrator:
             self._process_completed_bot(bot_id)
     
     def _process_completed_bot(self, bot_id: str):
-        """Process a completed bot's transcript."""
+        """Process a completed bot's transcript, then delete bot on Recall to free concurrent limit."""
         info = self.active_bots.get(bot_id)
         if not info:
             return
@@ -405,34 +437,35 @@ class MeetingOrchestrator:
             # Get transcript
             transcript = self.recall.get_transcript(bot_id)
             
-            if not transcript:
+            if transcript:
+                print(f"  Retrieved transcript ({len(transcript)} segments)")
+                meeting_info = info.get('invite', {})
+                analysis = self.processor.process_transcript(transcript, meeting_info)
+                filepath = self.processor.save_analysis(analysis, self.meetings_dir)
+                print(f"  Saved analysis to: {filepath}")
+                try:
+                    self._send_meeting_summary(analysis, filepath)
+                except Exception as e:
+                    print(f"  Warning: Could not send email: {e}")
+                info['processed'] = True
+                info['analysis_file'] = filepath
+            else:
                 print("  No transcript available")
-                return
-            
-            print(f"  Retrieved transcript ({len(transcript)} segments)")
-            
-            # Process
-            meeting_info = info.get('invite', {})
-            analysis = self.processor.process_transcript(transcript, meeting_info)
-            
-            # Save
-            filepath = self.processor.save_analysis(analysis, self.meetings_dir)
-            print(f"  Saved analysis to: {filepath}")
-            
-            # Send email summary
-            try:
-                self._send_meeting_summary(analysis, filepath)
-            except Exception as e:
-                print(f"  Warning: Could not send email: {e}")
-            
-            # Cleanup
-            info['processed'] = True
-            info['analysis_file'] = filepath
-            
         except Exception as e:
             print(f"  Error processing transcript: {e}")
             import traceback
             traceback.print_exc()
+        finally:
+            # Always delete bot on Recall to free the concurrent bot limit (30)
+            try:
+                if self.recall.delete_bot(bot_id):
+                    print(f"  ✓ Deleted bot on Recall (freed slot)")
+                else:
+                    print(f"  Warning: could not delete bot on Recall")
+            except Exception as e:
+                print(f"  Warning: could not delete bot on Recall: {e}")
+            if bot_id in self.active_bots:
+                del self.active_bots[bot_id]
     
     def _send_meeting_summary(self, analysis: Dict[str, Any], filepath: str):
         """Send meeting summary via email."""
