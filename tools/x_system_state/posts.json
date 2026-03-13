@@ -1,0 +1,62 @@
+{
+  "posts": {
+    "dryrun_20260313T204554Z": {
+      "post_id": "dryrun_20260313T204554Z",
+      "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+      "published_at": "2026-03-13T20:45:54.194390+00:00",
+      "topic": "ai_ops",
+      "winner": {
+        "candidate_id": "20260313T204554Z_2",
+        "topic": "ai_ops",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+        "hook_type": "contrarian",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+        "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+        "rank_score": 0.8075
+      },
+      "dry_run": true
+    },
+    "dryrun_20260313T204615Z": {
+      "post_id": "dryrun_20260313T204615Z",
+      "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+      "published_at": "2026-03-13T20:46:15.492628+00:00",
+      "topic": "ai_ops",
+      "winner": {
+        "candidate_id": "20260313T204615Z_2",
+        "topic": "ai_ops",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+        "hook_type": "contrarian",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+        "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+        "rank_score": 0.8075
+      },
+      "dry_run": true
+    },
+    "2032560863484248090": {
+      "post_id": "2032560863484248090",
+      "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+      "published_at": "2026-03-13T20:54:07.778911+00:00",
+      "topic": "general_growth",
+      "winner": {
+        "candidate_id": "20260313T205140Z_1",
+        "topic": "general_growth",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Growth feels random and non-repeatable.",
+        "hook_type": "strong_opinion",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+        "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+        "rank_score": 0.8075
+      },
+      "dry_run": false
+    }
+  },
+  "latest_post_id": "2032560863484248090"
+}

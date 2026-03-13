@@ -1,0 +1,29 @@
+{
+  "run_id": "20260313T205407Z",
+  "post_id": "2032560863484248090",
+  "posted_text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+  "winner_context": {
+    "candidate_id": "20260313T205140Z_1",
+    "topic": "general_growth",
+    "intended_audience": "Founder/Owner",
+    "business_pain": "Growth feels random and non-repeatable.",
+    "hook_type": "strong_opinion",
+    "controversy_level": 0.7,
+    "predicted_reply_quality": 0.7,
+    "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+    "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+    "rank_score": 0.8075
+  },
+  "source_topic": "general_growth",
+  "published_at_utc": "20260313T205407Z",
+  "dry_run": false,
+  "api_payload": {
+    "data": {
+      "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+      "id": "2032560863484248090",
+      "edit_history_tweet_ids": [
+        "2032560863484248090"
+      ]
+    }
+  }
+}

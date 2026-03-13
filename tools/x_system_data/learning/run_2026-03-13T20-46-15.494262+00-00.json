@@ -1,0 +1,31 @@
+{
+  "mode": "full",
+  "dry_run": true,
+  "output": {
+    "research_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/research/research_20260313T204606Z.json",
+    "research_run_id": "20260313T204606Z",
+    "patterns_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/patterns_20260313T204615Z.json",
+    "plan_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/plan_20260313T204615Z.json",
+    "candidates_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/candidates_20260313T204615Z.json",
+    "ranked_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/ranked_20260313T204615Z.json",
+    "winner": {
+      "candidate_id": "20260313T204615Z_2",
+      "topic": "ai_ops",
+      "intended_audience": "Founder/Owner",
+      "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+      "hook_type": "contrarian",
+      "controversy_level": 0.7,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+      "rank_score": 0.8075
+    },
+    "post_id": "dryrun_20260313T204615Z",
+    "publish_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/publish_20260313T204615Z.json",
+    "monitor_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/replies/replies_20260313T204615Z.json",
+    "classification_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/classification_20260313T204615Z.json",
+    "reply_actions_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/replies/reply_actions_20260313T204615Z.json",
+    "dm_actions_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/dm_actions_20260313T204615Z.json"
+  },
+  "timestamp": "2026-03-13T20:46:15.494271+00:00"
+}

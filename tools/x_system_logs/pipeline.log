@@ -1,0 +1,37 @@
+2026-03-13 15:45:46,554 | INFO | [start] mode=full dry_run=True
+2026-03-13 15:45:54,187 | INFO | [research] wrote /Users/jcore/Desktop/Openclaw/tools/x_system_data/research/research_20260313T204546Z.json with 594 items
+2026-03-13 15:45:54,191 | INFO | [draft] wrote pattern summary /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/patterns_20260313T204554Z.json
+2026-03-13 15:45:54,192 | INFO | [draft] wrote opportunities /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/plan_20260313T204554Z.json
+2026-03-13 15:45:54,192 | INFO | [draft] wrote candidates /Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/candidates_20260313T204554Z.json
+2026-03-13 15:45:54,193 | INFO | [draft] winner candidate_id=20260313T204554Z_2 score=0.8075
+2026-03-13 15:45:54,194 | INFO | [publish] post_id=dryrun_20260313T204554Z dry_run=True
+2026-03-13 15:46:06,594 | INFO | [start] mode=full dry_run=True
+2026-03-13 15:46:15,486 | INFO | [research] wrote /Users/jcore/Desktop/Openclaw/tools/x_system_data/research/research_20260313T204606Z.json with 594 items
+2026-03-13 15:46:15,490 | INFO | [draft] wrote pattern summary /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/patterns_20260313T204615Z.json
+2026-03-13 15:46:15,490 | INFO | [draft] wrote opportunities /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/plan_20260313T204615Z.json
+2026-03-13 15:46:15,490 | INFO | [draft] wrote candidates /Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/candidates_20260313T204615Z.json
+2026-03-13 15:46:15,491 | INFO | [draft] winner candidate_id=20260313T204615Z_2 score=0.8075
+2026-03-13 15:46:15,492 | INFO | [publish] post_id=dryrun_20260313T204615Z dry_run=True
+2026-03-13 15:46:15,493 | INFO | [monitor] collected 0 replies for post_id=dryrun_20260313T204615Z
+2026-03-13 15:46:15,493 | INFO | [monitor] classified 0 replies
+2026-03-13 15:46:15,493 | INFO | [monitor] reply actions=0
+2026-03-13 15:46:15,494 | INFO | [monitor] dm actions=0
+2026-03-13 15:46:15,494 | INFO | [done] mode=full output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T20-46-15.494262+00-00.json
+2026-03-13 15:51:33,023 | INFO | [start] mode=research dry_run=False
+2026-03-13 15:51:40,084 | INFO | [research] wrote /Users/jcore/Desktop/Openclaw/tools/x_system_data/research/research_20260313T205133Z.json with 597 items
+2026-03-13 15:51:40,084 | INFO | [done] mode=research output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T20-51-40.084384+00-00.json
+2026-03-13 15:51:40,144 | INFO | [start] mode=draft dry_run=False
+2026-03-13 15:51:40,147 | INFO | [draft] wrote pattern summary /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/patterns_20260313T205140Z.json
+2026-03-13 15:51:40,147 | INFO | [draft] wrote opportunities /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/plan_20260313T205140Z.json
+2026-03-13 15:51:40,147 | INFO | [draft] wrote candidates /Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/candidates_20260313T205140Z.json
+2026-03-13 15:51:40,147 | INFO | [draft] winner candidate_id=20260313T205140Z_1 score=0.8075
+2026-03-13 15:51:40,148 | INFO | [done] mode=draft output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T20-51-40.148058+00-00.json
+2026-03-13 15:54:07,126 | INFO | [start] mode=publish dry_run=False
+2026-03-13 15:54:07,778 | INFO | [publish] post_id=2032560863484248090 dry_run=False
+2026-03-13 15:54:07,779 | INFO | [done] mode=publish output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T20-54-07.779353+00-00.json
+2026-03-13 16:00:49,241 | INFO | [start] mode=monitor dry_run=True
+2026-03-13 16:00:49,242 | INFO | [monitor] collected 0 replies for post_id=2032560863484248090
+2026-03-13 16:00:49,242 | INFO | [monitor] classified 0 replies across 1 posts
+2026-03-13 16:00:49,242 | INFO | [monitor] reply actions=0
+2026-03-13 16:00:49,243 | INFO | [monitor] dm actions=0
+2026-03-13 16:00:49,243 | INFO | [done] mode=monitor output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T21-00-49.243145+00-00.json

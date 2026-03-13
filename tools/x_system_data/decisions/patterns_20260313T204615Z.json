@@ -1,0 +1,495 @@
+{
+  "run_id": "20260313T204615Z",
+  "top_topics": [
+    [
+      "ai_ops",
+      16
+    ],
+    [
+      "general_growth",
+      16
+    ],
+    [
+      "sales_systems",
+      3
+    ],
+    [
+      "seo",
+      2
+    ],
+    [
+      "revops",
+      2
+    ],
+    [
+      "agency_performance",
+      1
+    ]
+  ],
+  "top_hooks": [
+    [
+      "statement",
+      29
+    ],
+    [
+      "question_hook",
+      9
+    ],
+    [
+      "contrarian_claim",
+      1
+    ],
+    [
+      "how_to",
+      1
+    ]
+  ],
+  "top_cta_styles": [
+    [
+      "none",
+      40
+    ]
+  ],
+  "items": [
+    {
+      "tweet_id": "2031910557117530295",
+      "topic": "ai_ops",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 1003.5300000000001
+    },
+    {
+      "tweet_id": "2031817853763273027",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 549.34
+    },
+    {
+      "tweet_id": "2032305194697179459",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 365.42
+    },
+    {
+      "tweet_id": "2032143094364454987",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.31,
+      "likely_icp_fit": 0.65,
+      "likely_discussion": true,
+      "composite_score": 352.75
+    },
+    {
+      "tweet_id": "2032162868372914325",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 327.58000000000004
+    },
+    {
+      "tweet_id": "2031914610169966963",
+      "topic": "general_growth",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 266.53000000000003
+    },
+    {
+      "tweet_id": "2031765510891987310",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 211.31
+    },
+    {
+      "tweet_id": "2032229995566055830",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 182.38000000000002
+    },
+    {
+      "tweet_id": "2032535302498115803",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 166.43000000000004
+    },
+    {
+      "tweet_id": "2031904877438517431",
+      "topic": "ai_ops",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 145.31
+    },
+    {
+      "tweet_id": "2031769960289276197",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 137.06
+    },
+    {
+      "tweet_id": "2031962949074763807",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 136.51
+    },
+    {
+      "tweet_id": "2032162002047795359",
+      "topic": "general_growth",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 118.58000000000001
+    },
+    {
+      "tweet_id": "2032294636245696939",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 117.7
+    },
+    {
+      "tweet_id": "2032276642467598647",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 116.60000000000001
+    },
+    {
+      "tweet_id": "2031820378822361523",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "directive",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 92.95
+    },
+    {
+      "tweet_id": "2032168759943999489",
+      "topic": "sales_systems",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.31,
+      "likely_icp_fit": 0.65,
+      "likely_discussion": true,
+      "composite_score": 83.5
+    },
+    {
+      "tweet_id": "2032345595675808131",
+      "topic": "ai_ops",
+      "hook_type": "contrarian_claim",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.63,
+      "likely_icp_fit": 0.8,
+      "likely_discussion": true,
+      "composite_score": 77.14
+    },
+    {
+      "tweet_id": "2032545851047047487",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 76.23
+    },
+    {
+      "tweet_id": "2032308830139515233",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 71.39000000000001
+    },
+    {
+      "tweet_id": "2032335608165908564",
+      "topic": "general_growth",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 71.28
+    },
+    {
+      "tweet_id": "2032149837530218922",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": false,
+      "composite_score": 66.33
+    },
+    {
+      "tweet_id": "2031771558142992815",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 61.49
+    },
+    {
+      "tweet_id": "2030347090618937759",
+      "topic": "sales_systems",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.65,
+      "likely_discussion": true,
+      "composite_score": 60.625
+    },
+    {
+      "tweet_id": "2032228775518462375",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 52.910000000000004
+    },
+    {
+      "tweet_id": "2032440034260091197",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.63,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 52.800000000000004
+    },
+    {
+      "tweet_id": "2032456775820353622",
+      "topic": "seo",
+      "hook_type": "how_to",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.95,
+      "likely_discussion": true,
+      "composite_score": 44.019999999999996
+    },
+    {
+      "tweet_id": "2031613221488996468",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.65,
+      "likely_discussion": true,
+      "composite_score": 37.625
+    },
+    {
+      "tweet_id": "2032505265715818698",
+      "topic": "agency_performance",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.8,
+      "likely_discussion": true,
+      "composite_score": 37.519999999999996
+    },
+    {
+      "tweet_id": "2032538012987654550",
+      "topic": "revops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.65,
+      "likely_discussion": false,
+      "composite_score": 37.25
+    },
+    {
+      "tweet_id": "2031808136626266314",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 36.85
+    },
+    {
+      "tweet_id": "2032547854301168059",
+      "topic": "ai_ops",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 30.580000000000002
+    },
+    {
+      "tweet_id": "2031772609134661909",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 24.310000000000002
+    },
+    {
+      "tweet_id": "2032214913687642237",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 23.210000000000004
+    },
+    {
+      "tweet_id": "2032143258697310233",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 22.0
+    },
+    {
+      "tweet_id": "2032448625863700853",
+      "topic": "seo",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.31,
+      "likely_icp_fit": 0.8,
+      "likely_discussion": true,
+      "composite_score": 21.7
+    },
+    {
+      "tweet_id": "2031808478071963910",
+      "topic": "general_growth",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 21.450000000000003
+    },
+    {
+      "tweet_id": "2032447598607347856",
+      "topic": "revops",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 1.0,
+      "likely_discussion": true,
+      "composite_score": 21.0
+    },
+    {
+      "tweet_id": "2032504125359849720",
+      "topic": "sales_systems",
+      "hook_type": "question_hook",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 1.0,
+      "likely_discussion": false,
+      "composite_score": 20.8
+    },
+    {
+      "tweet_id": "2031767874080326047",
+      "topic": "ai_ops",
+      "hook_type": "statement",
+      "cta_style": "none",
+      "tone": "practical",
+      "controversy_score": 0.0,
+      "likely_icp_fit": 0.5,
+      "likely_discussion": true,
+      "composite_score": 19.580000000000002
+    }
+  ]
+}

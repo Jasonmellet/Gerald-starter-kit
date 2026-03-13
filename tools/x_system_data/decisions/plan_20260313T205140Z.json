@@ -1,0 +1,40 @@
+{
+  "run_id": "20260313T205140Z",
+  "opportunities": [
+    {
+      "opportunity_id": "20260313T205140Z_1",
+      "topic": "general_growth",
+      "business_pain": "Growth feels random and non-repeatable.",
+      "target_icp_segment": "Founder/Owner",
+      "reply_trigger": "Ask operators to share their current bottleneck or handoff failure."
+    },
+    {
+      "opportunity_id": "20260313T205140Z_2",
+      "topic": "ai_ops",
+      "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+      "target_icp_segment": "CEO/President",
+      "reply_trigger": "Ask operators to share their current bottleneck or handoff failure."
+    },
+    {
+      "opportunity_id": "20260313T205140Z_3",
+      "topic": "sales_systems",
+      "business_pain": "Leads are generated but never consistently followed up.",
+      "target_icp_segment": "Head of Sales/RevOps",
+      "reply_trigger": "Ask operators to share their current bottleneck or handoff failure."
+    },
+    {
+      "opportunity_id": "20260313T205140Z_4",
+      "topic": "seo",
+      "business_pain": "Traffic is up but qualified demand is flat.",
+      "target_icp_segment": "Head of Marketing/Growth",
+      "reply_trigger": "Ask operators to share their current bottleneck or handoff failure."
+    },
+    {
+      "opportunity_id": "20260313T205140Z_5",
+      "topic": "revops",
+      "business_pain": "Leadership cannot trust pipeline or forecast numbers.",
+      "target_icp_segment": "Operations Leader",
+      "reply_trigger": "Ask operators to share their current bottleneck or handoff failure."
+    }
+  ]
+}

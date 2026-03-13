@@ -1,0 +1,23 @@
+{
+  "mode": "draft",
+  "dry_run": false,
+  "output": {
+    "patterns_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/patterns_20260313T205140Z.json",
+    "plan_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/plan_20260313T205140Z.json",
+    "candidates_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/candidates_20260313T205140Z.json",
+    "ranked_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/ranked_20260313T205140Z.json",
+    "winner": {
+      "candidate_id": "20260313T205140Z_1",
+      "topic": "general_growth",
+      "intended_audience": "Founder/Owner",
+      "business_pain": "Growth feels random and non-repeatable.",
+      "hook_type": "strong_opinion",
+      "controversy_level": 0.7,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+      "rank_score": 0.8075
+    }
+  },
+  "timestamp": "2026-03-13T20:51:40.148064+00:00"
+}

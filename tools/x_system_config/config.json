@@ -1,0 +1,48 @@
+{
+  "ai_enabled": false,
+  "max_per_query": 40,
+  "pattern_top_n": 40,
+  "candidate_count": 5,
+  "monitor": {
+    "poll_interval_seconds": 600,
+    "max_window_seconds": 0,
+    "recent_post_lookback_hours": 48,
+    "max_posts_per_monitor_run": 6
+  },
+  "run_defaults": {
+    "dry_run": false
+  },
+  "scoring_weights": {
+    "icp_match": 0.35,
+    "opinion_strength": 0.2,
+    "clarity": 0.15,
+    "pain_relevance": 0.15,
+    "reply_likelihood": 0.15
+  },
+  "reply_heuristics": {
+    "high_intent_markers": [
+      "how would you fix",
+      "we struggle",
+      "what tools",
+      "can you help",
+      "exactly our problem",
+      "how did you do this",
+      "need help"
+    ],
+    "low_signal_markers": [
+      "great post",
+      "nice post",
+      "🔥",
+      "👏",
+      "lol",
+      "gm"
+    ]
+  },
+  "dm_policy": {
+    "allow_on_classifications": [
+      "public_reply_dm"
+    ],
+    "max_dms_per_user_per_campaign": 1
+  }
+}
+

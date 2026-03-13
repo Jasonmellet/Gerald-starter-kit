@@ -1,0 +1,18 @@
+{
+  "mode": "monitor",
+  "dry_run": true,
+  "output": {
+    "post_ids": [
+      "2032560863484248090"
+    ],
+    "monitor_paths": [
+      "/Users/jcore/Desktop/Openclaw/tools/x_system_data/replies/replies_20260313T210049Z.json"
+    ],
+    "classified_count": 0,
+    "reply_actions_path": "/Users/jcore/Desktop/Openclaw/tools/x_system_data/replies/reply_actions_20260313T210049Z.json",
+    "dm_actions_paths": [
+      "/Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/dm_actions_20260313T210049Z.json"
+    ]
+  },
+  "timestamp": "2026-03-13T21:00:49.243153+00:00"
+}
