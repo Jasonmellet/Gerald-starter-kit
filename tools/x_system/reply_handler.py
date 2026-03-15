@@ -26,6 +26,15 @@ def _build_reply_text(source_text: str) -> str:
     return "Appreciate you jumping in. What part of this is most painful in your workflow right now?"
 
 
+def _alternate_reply_text(source_text: str) -> str:
+    body = source_text.lower()
+    if "pipeline" in body or "crm" in body:
+        return "That is useful context. Which stage loses momentum most often on your side?"
+    if "seo" in body or "ppc" in body:
+        return "Helpful point. Where does performance drop first for you, lead quality or close rate?"
+    return "Thanks for the context. Which handoff is creating the most drag for your team right now?"
+
+
 def handle_public_replies(
     x_client: XClient,
     classified_items: List[Dict[str, Any]],
@@ -56,14 +65,43 @@ def handle_public_replies(
                 "result_id": f"dryrun_reply_{reply_id}",
             }
         else:
-            payload = x_client.reply_to_tweet(in_reply_to_tweet_id=reply_id, text=reply_text)
-            result_id = payload.get("data", {}).get("id")
-            action = {
-                "reply_id": reply_id,
-                "action": "posted_reply",
-                "reply_text": reply_text,
-                "result_id": result_id,
-            }
+            try:
+                payload = x_client.reply_to_tweet(in_reply_to_tweet_id=reply_id, text=reply_text)
+                result_id = payload.get("data", {}).get("id")
+                action = {
+                    "reply_id": reply_id,
+                    "action": "posted_reply",
+                    "reply_text": reply_text,
+                    "result_id": result_id,
+                }
+            except Exception as exc:
+                err = str(exc)
+                # X may reject identical reply text repeatedly. Try one alternate.
+                if "duplicate content" in err.lower():
+                    alt_text = _alternate_reply_text(item.get("text", ""))
+                    try:
+                        payload = x_client.reply_to_tweet(in_reply_to_tweet_id=reply_id, text=alt_text)
+                        result_id = payload.get("data", {}).get("id")
+                        action = {
+                            "reply_id": reply_id,
+                            "action": "posted_reply_alternate",
+                            "reply_text": alt_text,
+                            "result_id": result_id,
+                        }
+                    except Exception as exc2:
+                        action = {
+                            "reply_id": reply_id,
+                            "action": "skip_reply_error",
+                            "reply_text": alt_text,
+                            "error": str(exc2),
+                        }
+                else:
+                    action = {
+                        "reply_id": reply_id,
+                        "action": "skip_reply_error",
+                        "reply_text": reply_text,
+                        "error": err,
+                    }
         state.mark_reply_handled(reply_id, {"handled_at": run_id, "classification": label, "action": action})
         actions.append(action)
 

@@ -149,6 +149,12 @@ class XClient:
             {"max_results": str(min(max_results, 100)), "tweet.fields": "created_at,public_metrics"},
         )
 
+    def get_tweet(self, tweet_id: str) -> Dict[str, Any]:
+        return self._bearer_get(
+            f"/tweets/{tweet_id}",
+            {"tweet.fields": "created_at,author_id,conversation_id,in_reply_to_user_id,public_metrics"},
+        )
+
     def search_replies(self, tweet_id: str, max_results: int = 50) -> List[Dict[str, Any]]:
         payload = self.search_recent(f"conversation_id:{tweet_id} is:reply", max_results=max_results)
         return payload.get("data", []) or []

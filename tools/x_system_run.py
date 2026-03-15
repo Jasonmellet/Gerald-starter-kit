@@ -109,7 +109,15 @@ def run_draft_mode(paths, state: StateManager, cfg: Dict[str, Any], logger, ai: 
 
     plan = build_opportunities(patterns.summary, paths.data_dir / "decisions", primary_theme=primary_theme)
     logger.info(f"[draft] wrote opportunities {plan.artifact_path}")
-    candidates = generate_candidates(plan.opportunities, paths.data_dir / "posts", ai_helper=ai, max_candidates=cfg.get("candidate_count", 5))
+    candidates = generate_candidates(
+        plan.opportunities,
+        paths.data_dir / "posts",
+        ai_helper=ai,
+        max_candidates=int(cfg.get("candidate_batch_size", 10)),
+        min_total_score=int(cfg.get("min_total_score", 35)),
+        content_intel_enabled=bool(cfg.get("content_intel_enabled", True)),
+        research_items=items,
+    )
     logger.info(f"[draft] wrote candidates {candidates.artifact_path}")
     ranked = rank_candidates(
         candidates.candidates,
@@ -124,6 +132,7 @@ def run_draft_mode(paths, state: StateManager, cfg: Dict[str, Any], logger, ai: 
                 "reply_likelihood": 0.15,
             },
         ),
+        min_total_score=int(cfg.get("min_total_score", 35)),
     )
     logger.info(f"[draft] winner candidate_id={ranked.winner.get('candidate_id')} score={ranked.winner.get('rank_score')}")
     return {
@@ -176,8 +185,11 @@ def run_publish_mode(client: XClient, paths, state: StateManager, cfg: Dict[str,
     # Keep last N to compare against (e.g. last 5 real posts)
     recent_texts = recent_texts[-5:]
 
+    start_index = int(cfg.get("publish_top_n_index", 0))
+    if start_index < 0:
+        start_index = 0
     chosen = None
-    for c in ranked_list:
+    for c in ranked_list[start_index:]:
         if not _text_is_duplicate_of_recent(c.get("text", ""), recent_texts):
             chosen = c
             break
@@ -250,6 +262,13 @@ def run_monitor_mode(
     all_classified_items: List[Dict[str, Any]] = []
     monitor_artifacts: List[str] = []
     for pid in target_post_ids:
+        post_author_id: Optional[str] = None
+        try:
+            post_payload = client.get_tweet(str(pid))
+            post_author_id = str((post_payload.get("data") or {}).get("author_id") or "") or None
+        except Exception as exc:
+            logger.warning(f"[monitor] unable to resolve post author for {pid}: {exc}")
+
         monitor = monitor_replies(
             client,
             pid,
@@ -258,9 +277,18 @@ def run_monitor_mode(
             poll_interval_seconds=poll,
             max_window_seconds=window,
         )
+        filtered_replies = monitor.replies
+        if post_author_id:
+            filtered_replies = [
+                r for r in monitor.replies if str(r.get("author_id") or "") != post_author_id
+            ]
+            if len(filtered_replies) != len(monitor.replies):
+                logger.info(
+                    f"[monitor] filtered {len(monitor.replies) - len(filtered_replies)} self-authored replies for post_id={pid}"
+                )
         monitor_artifacts.append(str(monitor.artifact_path))
-        logger.info(f"[monitor] collected {len(monitor.replies)} replies for post_id={pid}")
-        classified = classify_replies(monitor.replies, paths.data_dir / "decisions", ai_helper=ai)
+        logger.info(f"[monitor] collected {len(filtered_replies)} replies for post_id={pid}")
+        classified = classify_replies(filtered_replies, paths.data_dir / "decisions", ai_helper=ai)
         tagged = []
         for item in classified.items:
             row = dict(item)
