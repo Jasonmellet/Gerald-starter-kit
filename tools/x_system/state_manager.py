@@ -40,7 +40,7 @@ class StateManager:
     def load_pipeline_state(self) -> Dict[str, Any]:
         return load_json_file(
             self._path("pipeline_state.json"),
-            {"stage": "idle", "last_run_id": None, "updated_at": None, "monitor": {}},
+            {"stage": "idle", "last_run_id": None, "updated_at": None, "monitor": {}, "last_theme_index": 0},
         )
 
     def save_pipeline_state(self, data: Dict[str, Any]) -> None:

@@ -15,11 +15,18 @@ class PlanResult:
     artifact_path: Path
 
 
-def build_opportunities(pattern_summary: Dict[str, Any], out_dir: Path) -> PlanResult:
+def build_opportunities(
+    pattern_summary: Dict[str, Any],
+    out_dir: Path,
+    primary_theme: str | None = None,
+) -> PlanResult:
     run_id = utc_now_compact()
     topic_rank = [t[0] for t in pattern_summary.get("top_topics", [])]
     if not topic_rank:
         topic_rank = ["sales_systems", "revops", "agency_performance", "ai_ops"]
+
+    if primary_theme:
+        topic_rank = [primary_theme] + [t for t in topic_rank if t != primary_theme][:4]
 
     opportunities: List[Dict[str, Any]] = []
     default_pains = {
@@ -29,6 +36,7 @@ def build_opportunities(pattern_summary: Dict[str, Any], out_dir: Path) -> PlanR
         "seo": "Traffic is up but qualified demand is flat.",
         "ppc": "Ad spend rises while close rate stalls.",
         "ai_ops": "Teams deploy AI tools without a reliable operating workflow.",
+        "vibe_coding": "Shipping fast feels good until technical debt blocks the next feature.",
         "general_growth": "Growth feels random and non-repeatable.",
     }
     icp_segments = [
@@ -38,7 +46,8 @@ def build_opportunities(pattern_summary: Dict[str, Any], out_dir: Path) -> PlanR
         "Head of Marketing/Growth",
         "Operations Leader",
     ]
-    for idx, topic in enumerate(topic_rank[:5]):
+    limit = 1 if primary_theme else 5
+    for idx, topic in enumerate(topic_rank[:limit]):
         opportunities.append(
             {
                 "opportunity_id": f"{run_id}_{idx+1}",

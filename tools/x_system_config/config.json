@@ -1,4 +1,6 @@
 {
+  "alert_email": "jason@allgreatthings.io",
+  "theme_rotation": ["seo", "ai_ops", "vibe_coding", "ppc", "revops", "sales_systems", "agency_performance"],
   "ai_enabled": false,
   "max_per_query": 40,
   "pattern_top_n": 40,

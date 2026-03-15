@@ -15,6 +15,7 @@ TOPIC_MARKERS = {
     "sales_systems": ["outbound", "follow-up", "lead gen", "sales process", "prospecting"],
     "ai_ops": ["ai", "automation", "agent", "workflow"],
     "agency_performance": ["agency", "client", "retainer", "attribution", "reporting"],
+    "vibe_coding": ["vibe coding", "ship fast", "technical debt", "velocity", "developer experience"],
 }
 
 

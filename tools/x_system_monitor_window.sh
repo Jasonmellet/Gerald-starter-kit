@@ -10,6 +10,7 @@ if (( 10#$CURRENT_HOUR < 8 || 10#$CURRENT_HOUR >= 20 )); then
 fi
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+export PYTHONPATH="$REPO_ROOT/tools"
 cd "$REPO_ROOT"
 /usr/bin/python3 tools/x_system_run.py monitor
 

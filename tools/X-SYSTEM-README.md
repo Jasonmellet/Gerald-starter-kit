@@ -116,3 +116,31 @@ launchctl unload "$HOME/Library/LaunchAgents/com.openclaw.xsystem-publish.plist"
 launchctl unload "$HOME/Library/LaunchAgents/com.openclaw.xsystem-monitor.plist"
 ```
 
+### Repo on Desktop: "Operation not permitted"
+
+**macOS does not allow launchd to execute scripts inside a folder on the Desktop.** If the repo lives at e.g. `~/Desktop/Openclaw`, every job will fail with `Operation not permitted` and the `.log` files stay empty.
+
+**Fix:** Re-run the install script. It detects Desktop, syncs the repo to `~/Openclaw`, and installs the plists to use `~/Openclaw`. Jobs then run from there.
+
+```bash
+bash tools/install_x_system_launchd.sh
+```
+
+After that, keep `~/Openclaw` in sync with your main repo when you pull (e.g. run the install again, or rsync/copy manually). You can keep working in the Desktop copy; the scheduler uses `~/Openclaw`.
+
+### 402 / 403 from X API (not a credential bug)
+
+If research or publish fails with **402** or **403**, auth is usually fine (credentials are valid). These codes mean **billing/product limits** on X’s side:
+
+| Code | Meaning | What to do |
+|------|--------|------------|
+| **402 Payment Required** / **CreditsDepleted** | Your enrolled X Developer account has **no credits left** for this billing period. | In [X Developer Portal](https://developer.x.com/) → your project → **Billing** or **Usage**: add credits or check plan. |
+| **403 Forbidden** (on `GET /2/tweets/search/recent`) | The **search/recent** endpoint is not allowed on your current product tier (e.g. Free tier doesn’t include it), or access was limited after credits ran out. | Same as above: check product tier and credits. Search and post both require sufficient tier/credits. |
+
+The pipeline uses:
+
+- **Bearer token** → `GET /2/tweets/search/recent` (research, monitor reply fetch). If this returns 402/403, research and reply monitoring stop.
+- **OAuth 1.0a** → `POST /2/tweets` (publish, reply). If this returns 402 Credits Depleted, no post goes out.
+
+No code or env change fixes 402/403; fix it in the X Developer Portal (credits / plan).
+

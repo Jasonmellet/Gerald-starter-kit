@@ -2,6 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+export PYTHONPATH="$REPO_ROOT/tools"
 MODE="${1:-}"
 if [[ -z "$MODE" ]]; then
   echo "Usage: $0 <research|draft|publish|monitor|full> [extra args]"

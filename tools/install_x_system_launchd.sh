@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+REPO_NOW="$(cd "$(dirname "$0")/.." && pwd)"
+
+# macOS blocks launchd from executing scripts on Desktop. Copy to ~/Openclaw and install from there.
+if [[ "$REPO_NOW" == *"Desktop"* ]]; then
+  TARGET="$HOME/Openclaw"
+  echo "Repo is on Desktop; launchd cannot run scripts there (Operation not permitted)."
+  echo "Syncing to $TARGET and installing from there..."
+  mkdir -p "$(dirname "$TARGET")"
+  rsync -a "$REPO_NOW/" "$TARGET/" 2>/dev/null || cp -R "$REPO_NOW" "$TARGET"
+  exec bash "$TARGET/tools/install_x_system_launchd.sh"
+fi
+
+REPO_ROOT="$REPO_NOW"
 LAUNCHD_DIR="$HOME/Library/LaunchAgents"
 mkdir -p "$LAUNCHD_DIR"
 mkdir -p "$REPO_ROOT/tools/x_system_logs"

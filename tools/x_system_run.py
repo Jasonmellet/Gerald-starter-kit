@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 import argparse
+import subprocess
+import sys
+import traceback
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -28,6 +31,28 @@ from x_system.reply_monitor import monitor_replies
 from x_system.research import run_research
 from x_system.state_manager import StateManager, utc_now_iso
 from x_system.x_client import XClient
+
+
+def _send_failure_alert(reason: str, mode: str, cfg: Dict[str, Any]) -> None:
+    """Send email notification on pipeline failure. Best-effort; does not raise."""
+    to = (cfg or {}).get("alert_email", "jason@allgreatthings.io")
+    if not to:
+        return
+    repo_root = Path(__file__).resolve().parent.parent
+    send_script = repo_root / "tools" / "send_email.py"
+    if not send_script.exists():
+        return
+    subject = f"X automation failed: {mode}"
+    body = f"The X automation pipeline failed during mode '{mode}'.\n\nReason:\n{reason}\n\nCheck logs: {repo_root}/tools/x_system_logs/"
+    try:
+        subprocess.run(
+            [sys.executable, str(send_script), "--to", to, "--subject", subject, "--body", body],
+            cwd=str(repo_root),
+            timeout=30,
+            capture_output=True,
+        )
+    except Exception:
+        pass
 
 
 def _latest_artifact(path: Path, prefix: str) -> Optional[Path]:
@@ -62,7 +87,7 @@ def run_research_mode(client: XClient, paths, cfg: Dict[str, Any], logger) -> Di
     return {"research_path": str(result.artifact_path), "research_run_id": result.run_id}
 
 
-def run_draft_mode(paths, cfg: Dict[str, Any], logger, ai: AIHelper) -> Dict[str, Any]:
+def run_draft_mode(paths, state: StateManager, cfg: Dict[str, Any], logger, ai: AIHelper) -> Dict[str, Any]:
     research_artifact = _latest_artifact(paths.data_dir / "research", "research")
     research_data = _load_artifact(research_artifact)
     items: List[Dict[str, Any]] = research_data.get("items", [])
@@ -71,7 +96,18 @@ def run_draft_mode(paths, cfg: Dict[str, Any], logger, ai: AIHelper) -> Dict[str
 
     patterns = extract_patterns(items, paths.data_dir / "decisions", top_n=cfg.get("pattern_top_n", 40))
     logger.info(f"[draft] wrote pattern summary {patterns.artifact_path}")
-    plan = build_opportunities(patterns.summary, paths.data_dir / "decisions")
+
+    theme_rotation = cfg.get("theme_rotation") or [
+        "seo", "ai_ops", "vibe_coding", "ppc", "revops", "sales_systems", "agency_performance"
+    ]
+    pipeline = state.load_pipeline_state()
+    last_idx = int(pipeline.get("last_theme_index", 0))
+    primary_theme = theme_rotation[last_idx % len(theme_rotation)]
+    pipeline["last_theme_index"] = (last_idx + 1) % len(theme_rotation)
+    state.save_pipeline_state(pipeline)
+    logger.info(f"[draft] theme for this run: {primary_theme} (next run: {theme_rotation[pipeline['last_theme_index'] % len(theme_rotation)]})")
+
+    plan = build_opportunities(patterns.summary, paths.data_dir / "decisions", primary_theme=primary_theme)
     logger.info(f"[draft] wrote opportunities {plan.artifact_path}")
     candidates = generate_candidates(plan.opportunities, paths.data_dir / "posts", ai_helper=ai, max_candidates=cfg.get("candidate_count", 5))
     logger.info(f"[draft] wrote candidates {candidates.artifact_path}")
@@ -99,13 +135,59 @@ def run_draft_mode(paths, cfg: Dict[str, Any], logger, ai: AIHelper) -> Dict[str
     }
 
 
+def _normalize_text_for_dedup(t: str) -> str:
+    """Collapse whitespace and strip for duplicate check."""
+    return " ".join((t or "").strip().split())
+
+
+def _text_is_duplicate_of_recent(candidate_text: str, recent_texts: List[str], prefix_chars: int = 80) -> bool:
+    """True if candidate matches any recent post (exact after normalize, or same opening)."""
+    norm_c = _normalize_text_for_dedup(candidate_text)
+    if not norm_c:
+        return True
+    prefix_c = norm_c[:prefix_chars]
+    for r in recent_texts:
+        norm_r = _normalize_text_for_dedup(r)
+        if norm_c == norm_r or (len(norm_r) >= prefix_chars and norm_c[:prefix_chars] == norm_r[:prefix_chars]):
+            return True
+        if prefix_c and norm_r.startswith(prefix_c):
+            return True
+    return False
+
+
 def run_publish_mode(client: XClient, paths, state: StateManager, cfg: Dict[str, Any], logger, dry_run: bool) -> Dict[str, Any]:
     ranked_artifact = _latest_artifact(paths.data_dir / "decisions", "ranked")
     ranked_data = _load_artifact(ranked_artifact)
+    ranked_list = ranked_data.get("ranked", [])
     winner = ranked_data.get("winner")
-    if not winner:
-        raise RuntimeError("No ranked winner found. Run draft mode first.")
 
+    if not ranked_list:
+        raise RuntimeError("No ranked candidates found. Run draft mode first.")
+
+    # Avoid reposting the same or near-identical content (e.g. last post had zero interactions)
+    posts_state = state.load_posts()
+    recent_texts: List[str] = []
+    for pid, rec in (posts_state.get("posts") or {}).items():
+        if rec.get("dry_run"):
+            continue
+        t = rec.get("text")
+        if t:
+            recent_texts.append(t)
+    # Keep last N to compare against (e.g. last 5 real posts)
+    recent_texts = recent_texts[-5:]
+
+    chosen = None
+    for c in ranked_list:
+        if not _text_is_duplicate_of_recent(c.get("text", ""), recent_texts):
+            chosen = c
+            break
+    if chosen is None:
+        logger.warning(
+            "[publish] all candidates duplicate or too similar to recent posts; skipping publish to avoid reposting"
+        )
+        return {"post_id": None, "skipped_duplicate": True, "reason": "all candidates too similar to recent posts"}
+
+    winner = chosen
     result = publish_winner(client, winner, paths.data_dir / "posts", dry_run=dry_run)
     logger.info(f"[publish] post_id={result.post_id} dry_run={dry_run}")
     state.record_post(
@@ -222,7 +304,7 @@ def run_full(
     _log_stage(state, "research")
     out.update(run_research_mode(client, paths, cfg, logger))
     _log_stage(state, "draft")
-    out.update(run_draft_mode(paths, cfg, logger, ai))
+    out.update(run_draft_mode(paths, state, cfg, logger, ai))
     _log_stage(state, "publish")
     out.update(run_publish_mode(client, paths, state, cfg, logger, dry_run))
     _log_stage(state, "monitor")
@@ -250,28 +332,34 @@ def main() -> None:
     _log_stage(state, "starting", {"requested_mode": args.mode})
     output: Dict[str, Any] = {}
 
-    if args.mode == "research":
-        output = run_research_mode(client, paths, cfg, logger)
-    elif args.mode == "draft":
-        output = run_draft_mode(paths, cfg, logger, ai)
-    elif args.mode == "publish":
-        output = run_publish_mode(client, paths, state, cfg, logger, args.dry_run)
-    elif args.mode == "monitor":
-        output = run_monitor_mode(client, paths, state, cfg, logger, args.dry_run, args.post_id, ai)
-    elif args.mode == "full":
-        output = run_full(client, paths, state, cfg, logger, args.dry_run, ai)
+    try:
+        if args.mode == "research":
+            output = run_research_mode(client, paths, cfg, logger)
+        elif args.mode == "draft":
+            output = run_draft_mode(paths, state, cfg, logger, ai)
+        elif args.mode == "publish":
+            output = run_publish_mode(client, paths, state, cfg, logger, args.dry_run)
+        elif args.mode == "monitor":
+            output = run_monitor_mode(client, paths, state, cfg, logger, args.dry_run, args.post_id, ai)
+        elif args.mode == "full":
+            output = run_full(client, paths, state, cfg, logger, args.dry_run, ai)
 
-    learning_path = paths.data_dir / "learning" / f"run_{utc_now_iso().replace(':', '-')}.json"
-    write_json_file(
-        learning_path,
-        {
-            "mode": args.mode,
-            "dry_run": args.dry_run,
-            "output": output,
-            "timestamp": utc_now_iso(),
-        },
-    )
-    logger.info(f"[done] mode={args.mode} output_saved={learning_path}")
+        learning_path = paths.data_dir / "learning" / f"run_{utc_now_iso().replace(':', '-')}.json"
+        write_json_file(
+            learning_path,
+            {
+                "mode": args.mode,
+                "dry_run": args.dry_run,
+                "output": output,
+                "timestamp": utc_now_iso(),
+            },
+        )
+        logger.info(f"[done] mode={args.mode} output_saved={learning_path}")
+    except Exception as e:
+        reason = f"{type(e).__name__}: {e}\n\n{traceback.format_exc()}"
+        logger.exception(f"[failed] mode={args.mode}")
+        _send_failure_alert(reason, args.mode, cfg)
+        raise
 
 
 if __name__ == "__main__":
