@@ -72,6 +72,9 @@ Cron schedule (recommended):
 - Waiting-room bot hangs after meeting ends:
   - Orchestrator now runs stale-bot cleanup each poll.
   - It exits/removes stale `in_waiting_room`/`joining_call` bots (including duplicate waiting bots when a completed bot already exists for that meeting).
+- Waiting room admission needed:
+  - Orchestrator now sends Telegram alert if Gerald remains in waiting room beyond threshold (`RECALL_WAITING_ROOM_ALERT_MINUTES`, default 2).
+  - Ensure `TELEGRAM_CHAT_ID` is set for alert routing.
 
 ## Output format
 

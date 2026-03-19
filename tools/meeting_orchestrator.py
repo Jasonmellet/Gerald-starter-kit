@@ -34,6 +34,7 @@ from pathlib import Path
 from recall_client import RecallAIClient
 from gmail_client import GmailClient
 from meeting_processor import MeetingProcessor
+from sessions_send import sessions_send
 
 
 class MeetingOrchestrator:
@@ -68,6 +69,8 @@ class MeetingOrchestrator:
         self.state_file = state_file
         self.invite_scan_limit = int(os.environ.get("MEETING_INVITE_SCAN_LIMIT", "200"))
         self.waiting_room_timeout_minutes = int(os.environ.get("RECALL_WAITING_ROOM_TIMEOUT_MINUTES", "20"))
+        self.waiting_room_alert_minutes = int(os.environ.get("RECALL_WAITING_ROOM_ALERT_MINUTES", "2"))
+        self.alert_telegram_chat_id = os.environ.get("TELEGRAM_CHAT_ID", "8130598479")
         
         # Clients
         self.recall = None
@@ -79,6 +82,7 @@ class MeetingOrchestrator:
         self.processed_invites = set()
         self.active_bots = {}  # bot_id -> meeting_info
         self.scheduled_meetings = {}  # meeting_url -> scheduled_time
+        self.waiting_room_alerted_bots = set()
         
         # Load state
         self._load_state()
@@ -177,6 +181,9 @@ class MeetingOrchestrator:
 
         # Step 1: Check for completed bots
         self._check_completed_bots()
+
+        # Step 1b: Notify if Gerald is stuck in waiting room.
+        self._notify_waiting_room_bots()
         
         # Step 2: Check Gmail for new invites
         self._check_new_invites(recheck_all=recheck_all)
@@ -189,6 +196,41 @@ class MeetingOrchestrator:
         
         # Update poll interval for next cycle
         self.current_poll_interval = self._get_dynamic_poll_interval()
+
+    def _meeting_key_from_url(self, meeting_url: str) -> Optional[str]:
+        if not meeting_url:
+            return None
+        if "meet.google.com/" in meeting_url:
+            return "google_meet:" + meeting_url.rsplit("/", 1)[-1]
+        return meeting_url
+
+    def _meeting_key_from_bot(self, bot: Dict[str, Any]) -> Optional[str]:
+        info = bot.get("meeting_url") or {}
+        platform = info.get("platform")
+        meeting_id = info.get("meeting_id")
+        if platform and meeting_id:
+            return f"{platform}:{meeting_id}"
+        return None
+
+    def _remote_bot_exists_for_meeting(self, meeting_url: str) -> bool:
+        target = self._meeting_key_from_url(meeting_url)
+        if not target:
+            return False
+        try:
+            bots = self.recall.list_bots()
+        except Exception:
+            return False
+        active_statuses = {"joining_call", "in_waiting_room", "in_lobby", "in_call", "recording"}
+        for bot in bots:
+            name = (bot.get("bot_name") or "").strip()
+            if not name.startswith("Gerald"):
+                continue
+            status = (bot.get("status") or "").lower()
+            if status not in active_statuses:
+                continue
+            if self._meeting_key_from_bot(bot) == target:
+                return True
+        return False
 
     def _parse_iso_datetime(self, value: Optional[str]) -> Optional[datetime]:
         if not value:
@@ -474,6 +516,10 @@ class MeetingOrchestrator:
             return
         meeting_url = invite.get('meeting_url')
         subject = invite.get('subject', 'Meeting')
+
+        if self._remote_bot_exists_for_meeting(meeting_url):
+            print("  Skipping - active Gerald bot already exists for this meeting")
+            return
         
         try:
             # Create bot immediately (Recall.ai handles joining at right time)
@@ -497,6 +543,59 @@ class MeetingOrchestrator:
             
         except Exception as e:
             print(f"  Error creating bot: {e}")
+
+    def _notify_waiting_room_bots(self):
+        """
+        Alert Jason when Gerald is stuck in waiting room long enough to need admission.
+        """
+        try:
+            bots = self.recall.list_bots()
+        except Exception as e:
+            print(f"Warning: could not list bots for waiting room alert: {e}")
+            return
+
+        now = datetime.now().astimezone()
+        active_bot_ids = set()
+
+        for bot in bots:
+            bot_id = bot.get("id")
+            bot_name = (bot.get("bot_name") or "").strip()
+            if not bot_id or not bot_name.startswith("Gerald"):
+                continue
+
+            status = (bot.get("status") or "").lower()
+            if status == "in_waiting_room":
+                active_bot_ids.add(bot_id)
+                joined_at = self._parse_iso_datetime(bot.get("join_at"))
+                if not joined_at:
+                    changes = bot.get("status_changes") or []
+                    if changes:
+                        joined_at = self._parse_iso_datetime(changes[-1].get("created_at"))
+                if not joined_at:
+                    continue
+
+                age_min = (now - joined_at).total_seconds() / 60.0
+                if age_min >= self.waiting_room_alert_minutes and bot_id not in self.waiting_room_alerted_bots:
+                    meeting_key = self._meeting_key_from_bot(bot) or "unknown meeting"
+                    msg = (
+                        "⚠️ Gerald is waiting in a meeting room.\n"
+                        f"- Meeting: {meeting_key}\n"
+                        f"- Waiting: {age_min:.0f} minutes\n"
+                        "Please admit Gerald in Google Meet."
+                    )
+                    if sessions_send(self.alert_telegram_chat_id, msg):
+                        self.waiting_room_alerted_bots.add(bot_id)
+                        print(f"  Sent waiting-room alert for bot {bot_id[:8]}...")
+
+            elif status in {"done", "left", "failed", "kicked"}:
+                # If a bot is no longer waiting, clear notification marker.
+                if bot_id in self.waiting_room_alerted_bots:
+                    self.waiting_room_alerted_bots.discard(bot_id)
+
+        # Safety prune: remove alert markers for bots no longer present.
+        self.waiting_room_alerted_bots = {
+            bot_id for bot_id in self.waiting_room_alerted_bots if bot_id in active_bot_ids
+        }
     
     def _check_completed_bots(self):
         """Check if any bots have completed and process transcripts."""
@@ -662,6 +761,8 @@ class MeetingOrchestrator:
                 
                 self.processed_invites = set(state.get('processed_invites', []))
                 self.scheduled_meetings = state.get('scheduled_meetings', {})
+                self.waiting_room_alerted_bots = set(state.get('waiting_room_alerted_bots', []))
+                self.active_bots = state.get('active_bots', {})
                 
                 print(f"Loaded state: {len(self.processed_invites)} processed invites")
             except Exception as e:
@@ -673,11 +774,8 @@ class MeetingOrchestrator:
             'last_saved': datetime.now().isoformat(),
             'processed_invites': list(self.processed_invites),
             'scheduled_meetings': self.scheduled_meetings,
-            'active_bots': {k: {
-                'status': v.get('status'),
-                'created_at': v.get('created_at'),
-                'processed': v.get('processed', False)
-            } for k, v in self.active_bots.items()}
+            'waiting_room_alerted_bots': list(self.waiting_room_alerted_bots),
+            'active_bots': self.active_bots,
         }
         
         try:
