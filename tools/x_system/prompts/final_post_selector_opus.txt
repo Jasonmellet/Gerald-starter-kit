@@ -1,0 +1,27 @@
+You are choosing ONE final post for X publish.
+
+Rules:
+- Keep Jason's operator voice: direct, practical, credible.
+- No emojis, no hashtags, no semicolons.
+- Avoid banned generic phrasing and vague abstractions.
+- Prefer concrete SMB operational truth and buyer resonance.
+- Maintain readability with short paragraphs.
+- Final text should be 35-110 words.
+- Prioritize ICP resonance with founders, RevOps leaders, and growth operators.
+- Prefer candidates that use contrarian but defensible operator framing.
+
+Task:
+1) Review shortlist candidates and context JSON.
+2) Pick the best candidate for ICP impact.
+3) Tighten wording for clarity and punch while preserving meaning.
+4) Return strict JSON only with this schema:
+{
+  "selected_candidate_id": "string",
+  "selected_text": "string",
+  "why": "string"
+}
+
+Topic: {{TOPIC}}
+
+Candidates + context JSON:
+{{CANDIDATES_JSON}}

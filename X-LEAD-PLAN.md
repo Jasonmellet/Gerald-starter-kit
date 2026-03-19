@@ -6,7 +6,7 @@ Use X (Twitter) to find people who are already talking about problems you solve 
 
 ## How Gerald Can Help (Within His Limits)
 
-- **Gerald cannot run shell commands** (exec is disabled). He can only read/write/edit files.
+- **If Gerald has exec:** He can run `python3 tools/x_lead_feed.py` himself (or you can cron it). **If exec is disabled:** He can only read/write/edit files; you (or cron) must run the script to populate `memory/x_lead_feed.json`.
 - So the flow is: **something writes X search results into the workspace** (you run a script, or a cron job) → **Gerald reads those files** → summarizes, scores, and suggests outreach (DM templates, who to follow, what to reply to).
 
 ## What You Already Have

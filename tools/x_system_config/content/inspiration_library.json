@@ -1,0 +1,212 @@
+[
+  {
+    "id": "ops_001",
+    "topic": "crm_hygiene",
+    "failure_mode": "CRM filled with junk leads and outdated records",
+    "business_consequence": "Sales team ignores the CRM",
+    "operator_truth": "A dirty CRM destroys trust faster than having no CRM at all"
+  },
+  {
+    "id": "ops_002",
+    "topic": "lead_generation",
+    "failure_mode": "Buying massive lead lists without qualification",
+    "business_consequence": "Burned domains and low reply rates",
+    "operator_truth": "Lead quality beats lead volume every time"
+  },
+  {
+    "id": "ops_003",
+    "topic": "marketing_attribution",
+    "failure_mode": "Teams relying only on last click attribution",
+    "business_consequence": "Cutting channels that actually drive pipeline",
+    "operator_truth": "Attribution models often hide the real growth drivers"
+  },
+  {
+    "id": "ops_004",
+    "topic": "sales_handoff",
+    "failure_mode": "Marketing passes raw leads to sales without context",
+    "business_consequence": "Sales ignores inbound leads",
+    "operator_truth": "The handoff between marketing and sales is where pipeline dies"
+  },
+  {
+    "id": "ops_005",
+    "topic": "tool_overload",
+    "failure_mode": "Companies stack 10+ tools hoping to solve growth",
+    "business_consequence": "Teams spend more time managing tools than customers",
+    "operator_truth": "Growth problems are usually operational, not technological"
+  },
+  {
+    "id": "ops_006",
+    "topic": "cold_email",
+    "failure_mode": "Sending campaigns before warming domains",
+    "business_consequence": "Immediate spam filtering",
+    "operator_truth": "Deliverability engineering matters more than copywriting"
+  },
+  {
+    "id": "ops_007",
+    "topic": "ai_in_marketing",
+    "failure_mode": "Using AI to generate endless low-value content",
+    "business_consequence": "No differentiation in the market",
+    "operator_truth": "AI amplifies strategy. It does not replace it"
+  },
+  {
+    "id": "ops_008",
+    "topic": "founder_marketing",
+    "failure_mode": "Founders hiding behind corporate brand voice",
+    "business_consequence": "Low engagement",
+    "operator_truth": "People trust operators more than brands"
+  },
+  {
+    "id": "ops_009",
+    "topic": "growth_strategy",
+    "failure_mode": "Random marketing experiments",
+    "business_consequence": "Non-repeatable growth",
+    "operator_truth": "Growth requires a repeatable operating system"
+  },
+  {
+    "id": "ops_010",
+    "topic": "seo_strategy",
+    "failure_mode": "Publishing disconnected blog posts",
+    "business_consequence": "No topical authority",
+    "operator_truth": "Search rewards depth, not randomness"
+  },
+  {
+    "id": "ops_011",
+    "topic": "pipeline_forecasting",
+    "failure_mode": "Forecasts based on optimism instead of data",
+    "business_consequence": "Missed revenue targets",
+    "operator_truth": "Pipeline math exposes uncomfortable truths"
+  },
+  {
+    "id": "ops_012",
+    "topic": "founder_expectations",
+    "failure_mode": "Expecting marketing to solve product problems",
+    "business_consequence": "High churn",
+    "operator_truth": "Marketing cannot fix a weak product"
+  },
+  {
+    "id": "ops_013",
+    "topic": "growth_consulting",
+    "failure_mode": "Selling vague strategy without execution",
+    "business_consequence": "No measurable results",
+    "operator_truth": "Strategy without execution is theater"
+  },
+  {
+    "id": "ops_014",
+    "topic": "ai_agents",
+    "failure_mode": "Building agents with no clear objective",
+    "business_consequence": "Cool demos but no revenue impact",
+    "operator_truth": "AI agents must attach to a revenue workflow"
+  },
+  {
+    "id": "ops_015",
+    "topic": "revops",
+    "failure_mode": "Treating RevOps as a reporting function",
+    "business_consequence": "No operational alignment",
+    "operator_truth": "RevOps is a systems discipline"
+  },
+  {
+    "id": "ops_016",
+    "topic": "marketing_dashboards",
+    "failure_mode": "Tracking vanity metrics",
+    "business_consequence": "Misaligned decision making",
+    "operator_truth": "Metrics should drive action"
+  },
+  {
+    "id": "ops_017",
+    "topic": "content_marketing",
+    "failure_mode": "Writing only informational content",
+    "business_consequence": "Low buyer intent traffic",
+    "operator_truth": "Transactional content converts"
+  },
+  {
+    "id": "ops_018",
+    "topic": "cold_outreach",
+    "failure_mode": "Generic personalization tokens",
+    "business_consequence": "Prospects ignore messages",
+    "operator_truth": "Real relevance beats fake personalization"
+  },
+  {
+    "id": "ops_019",
+    "topic": "sales_enablement",
+    "failure_mode": "Sales teams writing their own messaging",
+    "business_consequence": "Inconsistent positioning",
+    "operator_truth": "Messaging must be centralized"
+  },
+  {
+    "id": "ops_020",
+    "topic": "product_marketing",
+    "failure_mode": "Feature-driven messaging",
+    "business_consequence": "Customers do not understand value",
+    "operator_truth": "Buyers purchase outcomes"
+  },
+  {
+    "id": "ops_021",
+    "topic": "growth_teams",
+    "failure_mode": "No single owner for pipeline",
+    "business_consequence": "Everyone blames everyone",
+    "operator_truth": "Pipeline requires ownership"
+  },
+  {
+    "id": "ops_022",
+    "topic": "demand_generation",
+    "failure_mode": "Treating paid ads as the only channel",
+    "business_consequence": "High CAC",
+    "operator_truth": "Demand generation is multi-channel"
+  },
+  {
+    "id": "ops_023",
+    "topic": "ai_writing",
+    "failure_mode": "AI posts that sound like AI",
+    "business_consequence": "Low trust",
+    "operator_truth": "Authentic voice still wins"
+  },
+  {
+    "id": "ops_024",
+    "topic": "founder_led_growth",
+    "failure_mode": "Founders not visible online",
+    "business_consequence": "Low authority",
+    "operator_truth": "Distribution favors individuals"
+  },
+  {
+    "id": "ops_025",
+    "topic": "content_cadence",
+    "failure_mode": "Posting randomly",
+    "business_consequence": "No audience memory",
+    "operator_truth": "Consistency builds signal"
+  },
+  {
+    "id": "ops_026",
+    "topic": "marketing_agencies",
+    "failure_mode": "Selling services disconnected from revenue",
+    "business_consequence": "Clients churn quickly",
+    "operator_truth": "Agencies should own pipeline outcomes"
+  },
+  {
+    "id": "ops_027",
+    "topic": "sales_cycles",
+    "failure_mode": "Treating every lead the same",
+    "business_consequence": "Wasted sales effort",
+    "operator_truth": "Segmentation drives efficiency"
+  },
+  {
+    "id": "ops_028",
+    "topic": "founder_content",
+    "failure_mode": "Trying to sound polished",
+    "business_consequence": "Low engagement",
+    "operator_truth": "Raw insights perform better"
+  },
+  {
+    "id": "ops_029",
+    "topic": "data_infrastructure",
+    "failure_mode": "Data spread across multiple tools",
+    "business_consequence": "No single source of truth",
+    "operator_truth": "Centralized data enables growth"
+  },
+  {
+    "id": "ops_030",
+    "topic": "marketing_strategy",
+    "failure_mode": "Copying competitor playbooks",
+    "business_consequence": "Undifferentiated positioning",
+    "operator_truth": "Strategy requires original thinking"
+  }
+]

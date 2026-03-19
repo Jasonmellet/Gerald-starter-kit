@@ -121,9 +121,14 @@ class GmailClient:
         
         invites = []
         
-        # Search for calendar invites
-        # Gmail query: look for .ics attachments or calendar invite patterns
-        query = "filename:.ics OR subject:(invited you to) OR subject:(calendar invitation)"
+        # Search for calendar invites.
+        # Keep this query recency-scoped so new invitations do not get crowded out
+        # by long inbox history.
+        query = (
+            "newer_than:30d "
+            "(filename:ics OR filename:.ics OR subject:(Invitation:) "
+            "OR subject:(invited you to) OR subject:(calendar invitation))"
+        )
         
         try:
             results = self.service.users().messages().list(
@@ -135,15 +140,24 @@ class GmailClient:
             messages = results.get('messages', [])
             
             for msg_meta in messages:
-                msg = self.service.users().messages().get(
-                    userId='me',
-                    id=msg_meta['id'],
-                    format='full'
-                ).execute()
-                
-                invite = self._parse_invite(msg)
-                if invite:
-                    invites.append(invite)
+                try:
+                    msg = self.service.users().messages().get(
+                        userId='me',
+                        id=msg_meta['id'],
+                        format='full'
+                    ).execute()
+
+                    invite = self._parse_invite(msg)
+                    if invite:
+                        invites.append(invite)
+                except HttpError as e:
+                    # One malformed/unavailable message should not block the
+                    # entire invite scan cycle.
+                    print(f"Warning: skipping message {msg_meta.get('id')}: {e}")
+                    continue
+                except Exception as e:
+                    print(f"Warning: unexpected parse error for message {msg_meta.get('id')}: {e}")
+                    continue
             
             return invites
             

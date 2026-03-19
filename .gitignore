@@ -20,6 +20,22 @@ sources/*
 # OpenClaw workspace state (local only)
 .openclaw/
 
+# Local runtime logs/state/artifacts (do not commit)
+logs/*
+tools/x_system_logs/*.log
+tools/x_system_logs/*.err
+tools/x_system_data/**/*.json
+tools/x_system_data/**/*.md
+tools/x_system_state/*.json
+sarahchieng_*.json
+sarahchieng_*.srt
+sarahchieng_*.tsv
+sarahchieng_*.txt
+sarahchieng_*.vtt
+
+# Local OpenClaw gateway config can contain live auth token
+openclaw-gerald-with-exec.json
+
 # Personal notes and one-off files — keep local only
 notes.md
 ideas.txt

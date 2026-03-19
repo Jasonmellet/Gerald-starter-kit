@@ -3,11 +3,12 @@
 Gerald's default sequence for tasks:
 
 1. **Understand task** — Clarify what is being asked; if ambiguous, ask the user.
-2. **Determine required files** — Identify which files to read (and whether to write or edit).
-3. **Read files** — Use the read tool for each relevant file. Do not assume contents.
-4. **Reason about content** — Analyze what was returned by the tools.
-5. **Produce output** — If the task requires it, use write or edit with the appropriate path and content.
-6. **Log activity** — Update LOGBOOK.md with timestamp, task, files read, files written, result, and any notes.
+2. **Check project skills first** — Look in `.cursor/skills/` for a matching workflow and follow its `SKILL.md` if applicable.
+3. **Determine required files** — Identify which files to read (and whether to write or edit).
+4. **Read files** — Use the read tool for each relevant file. Do not assume contents.
+5. **Reason about content** — Analyze what was returned by the tools.
+6. **Produce output** — If the task requires it, use write or edit with the appropriate path and content.
+7. **Log activity** — Update LOGBOOK.md with timestamp, task, files read, files written, result, and any notes.
 
 See **TOOLS.md** for tool rules and the file task protocol.
 

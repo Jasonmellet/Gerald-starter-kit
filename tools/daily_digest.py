@@ -19,27 +19,95 @@ from gmail_client import GmailClient
 from x_multi_monitor import MONITORED_USERS, get_user_id, get_recent_tweets, load_state, format_tweet
 
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOGS_DIR = BASE_DIR / "logs"
+STATE_PATH = LOGS_DIR / "daily_digest_state.json"
+
+
 def get_yesterday_tweets():
-    """Get tweets from all monitored users from the last 24 hours."""
+    """
+    Get tweets from all monitored users from roughly the last 24 hours.
+
+    Important: this intentionally does **not** use the X monitor's state file.
+    The live monitor (`x_multi_monitor.py`) already advances its own state when
+    it sees new tweets. If we reused that state here, the daily digest would
+    frequently think there are "no new tweets" even when there were tweets
+    earlier in the day that the monitor already processed.
+
+    Instead, we fetch each user's recent tweets (API-limited window) and then
+    filter by timestamp to approximate "last 24 hours." This keeps the digest
+    independent and makes its view consistent regardless of how often the
+    monitor runs.
+    """
+    from datetime import timedelta
+
+    cutoff = datetime.utcnow() - timedelta(days=1)
     all_tweets = []
-    state = load_state()
-    
+
     for username in MONITORED_USERS:
         user_id = get_user_id(username)
         if not user_id:
             continue
-        
-        # Get tweets since last check
-        last_id = state.get(username)
-        tweets = get_recent_tweets(user_id, last_id)
-        
-        if tweets:
-            all_tweets.append({
-                'username': username,
-                'tweets': tweets
-            })
-    
+
+        # Get up to 10 recent tweets and filter by created_at time.
+        tweets = get_recent_tweets(user_id, since_id=None) or []
+        recent = []
+        for tweet in tweets:
+            created_at = tweet.get("created_at")
+            if not created_at:
+                continue
+            try:
+                # created_at example: "2026-03-13T13:05:12.000Z"
+                dt = datetime.strptime(created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
+            except ValueError:
+                # Fallback if microseconds are missing
+                try:
+                    dt = datetime.strptime(created_at, "%Y-%m-%dT%H:%M:%SZ")
+                except ValueError:
+                    continue
+
+            if dt >= cutoff:
+                recent.append(tweet)
+
+        if recent:
+            all_tweets.append(
+                {
+                    "username": username,
+                    "tweets": recent,
+                }
+            )
+
     return all_tweets
+
+
+def _today_str() -> str:
+    return datetime.now().strftime("%Y-%m-%d")
+
+
+def _load_state():
+    if not STATE_PATH.exists():
+        return {}
+    try:
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        # If state is corrupt, ignore and start fresh.
+        return {}
+
+
+def _save_state(state: dict) -> None:
+    LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(json.dumps(state, indent=2), encoding="utf-8")
+
+
+def _already_sent_today() -> bool:
+    state = _load_state()
+    return state.get("last_sent_date") == _today_str()
+
+
+def _mark_sent_today() -> None:
+    state = _load_state()
+    state["last_sent_date"] = _today_str()
+    _save_state(state)
 
 
 def build_digest(tweets_data):
@@ -92,6 +160,10 @@ def build_digest(tweets_data):
 def send_digest(test_mode=False):
     """Send daily digest email."""
     print("Building daily digest...")
+
+    if not test_mode and _already_sent_today():
+        print("Daily digest already sent today; skipping email send.")
+        return True
     
     tweets_data = get_yesterday_tweets()
     content = build_digest(tweets_data)
@@ -119,6 +191,7 @@ def send_digest(test_mode=False):
             subject=subject,
             body=content
         )
+        _mark_sent_today()
         print(f"✓ Daily digest sent to jason@allgreatthings.io")
         return True
     except Exception as e:

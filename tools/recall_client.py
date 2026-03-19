@@ -60,7 +60,7 @@ class RecallAIClient:
         Args:
             meeting_url: The meeting URL (Zoom, Google Meet, Teams, etc.)
             name: Display name for the bot in the meeting
-            transcription: Whether to enable transcription (default True; uses Recall's built-in provider).
+            transcription: Whether to enable transcription (default True; uses Recall's recallai_streaming).
             
         Returns:
             Bot object with id, status, etc.
@@ -69,10 +69,17 @@ class RecallAIClient:
             "meeting_url": meeting_url,
             "bot_name": name
         }
-        # Enable built-in transcription so we get transcripts for summary emails (no third-party credentials).
+        # Recall.ai requires recording_config.transcript.provider.recallai_streaming for transcripts.
+        # prioritize_accuracy = post-meeting transcript (best for summary emails).
         if transcription:
-            payload["transcription_options"] = {
-                "provider": "recallai"
+            payload["recording_config"] = {
+                "transcript": {
+                    "provider": {
+                        "recallai_streaming": {
+                            "mode": "prioritize_accuracy"
+                        }
+                    }
+                }
             }
         
         response = requests.post(
@@ -121,7 +128,7 @@ class RecallAIClient:
     def get_transcript(self, bot_id: str) -> Optional[List[Dict[str, Any]]]:
         """
         Get transcript for a completed bot session.
-        Uses Recall's transcript artifact API: bot -> recording.media_shortcuts.transcript -> GET transcript/{id}/ -> download_url.
+        Uses bot.recordings[].media_shortcuts.transcript (data.download_url or GET transcript/{id}/).
         Returns list of segments with 'speaker' and 'text' for meeting_processor.
         """
         bot = self.get_bot(bot_id)
@@ -130,25 +137,32 @@ class RecallAIClient:
 
         recordings = bot.get("recordings") or []
         if not recordings:
+            print("  [Recall] No recordings on bot (transcript may still be processing)")
             return None
         media = recordings[0].get("media_shortcuts") or {}
         transcript_artifact = media.get("transcript")
         if not isinstance(transcript_artifact, dict):
-            return None
-        transcript_id = transcript_artifact.get("id")
-        if not transcript_id:
+            print("  [Recall] No transcript in media_shortcuts (bot may have been created without recording_config.transcript)")
             return None
 
-        # GET transcript artifact (new API)
-        resp = requests.get(
-            f"{self.BASE_URL}/transcript/{transcript_id}/",
-            headers=self.headers
-        )
-        if resp.status_code != 200:
-            return None
-        artifact = resp.json()
-        download_url = (artifact.get("data") or {}).get("download_url")
+        # download_url can be in transcript.data (Retrieve Bot response) or from GET transcript/{id}/
+        download_url = (transcript_artifact.get("data") or {}).get("download_url")
         if not download_url:
+            transcript_id = transcript_artifact.get("id")
+            if not transcript_id:
+                print("  [Recall] Transcript artifact has no id and no data.download_url")
+                return None
+            resp = requests.get(
+                f"{self.BASE_URL}/transcript/{transcript_id}/",
+                headers=self.headers
+            )
+            if resp.status_code != 200:
+                print(f"  [Recall] GET transcript/{transcript_id}/ returned {resp.status_code}")
+                return None
+            artifact = resp.json()
+            download_url = (artifact.get("data") or {}).get("download_url")
+        if not download_url:
+            print("  [Recall] No download_url for transcript")
             return None
 
         # Fetch actual transcript JSON (list of {participant, words})
@@ -156,6 +170,7 @@ class RecallAIClient:
         down.raise_for_status()
         raw = down.json()
         if not isinstance(raw, list):
+            print("  [Recall] Transcript download is not a list")
             return None
 
         # Convert to [{speaker, text}, ...] for meeting_processor

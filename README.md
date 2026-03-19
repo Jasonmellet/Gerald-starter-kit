@@ -5,5 +5,7 @@ This folder is Gerald's home: instructions (AGENTS.md, SOUL.md, WORKFLOW.md), to
 - **YouTube:** Ask Gerald to analyze a video and paste the URL; he runs the ingest, then writes analysis to `outputs/`.
 - **Daily:** He reviews core files and HEARTBEAT when he checks in.
 - **Secrets:** One place only — **this folder's `.env`** (root). OpenClaw and the meeting scripts both read from here. Never commit `.env`.
+- **Running commands:** To let Gerald run scripts and activation commands (cron, LaunchAgent, `tools/*.py`), use the OpenClaw config that allows exec. See **docs/EXEC-ENABLED.md** and **openclaw-gerald-with-exec.json**.
+- **Reference docs:** Save API notes, specs, and other reference material in **docs/reference/**.
 
 The starter kit for cloning lives at [github.com/Jasonmellet/Gerald-starter-kit](https://github.com/Jasonmellet/Gerald-starter-kit). This is your running workspace.

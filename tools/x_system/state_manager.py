@@ -40,7 +40,14 @@ class StateManager:
     def load_pipeline_state(self) -> Dict[str, Any]:
         return load_json_file(
             self._path("pipeline_state.json"),
-            {"stage": "idle", "last_run_id": None, "updated_at": None, "monitor": {}, "last_theme_index": 0},
+            {
+                "stage": "idle",
+                "last_run_id": None,
+                "updated_at": None,
+                "monitor": {},
+                "last_theme_index": 0,
+                "last_alert": {},
+            },
         )
 
     def save_pipeline_state(self, data: Dict[str, Any]) -> None:
@@ -78,6 +85,9 @@ class StateManager:
         posts = data.get("posts", {})
         posts[post_id] = payload
         data["posts"] = posts
-        data["latest_post_id"] = post_id
+        # Keep latest_post_id pinned to real tweet IDs so monitor does not
+        # attempt to query synthetic dry-run IDs against X API.
+        if not payload.get("dry_run"):
+            data["latest_post_id"] = post_id
         self.save_posts(data)
 

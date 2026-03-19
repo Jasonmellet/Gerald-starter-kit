@@ -15,6 +15,8 @@ cat >> /tmp/current_crontab << 'EOF'
 0 9 * * * cd /Users/jcore/Desktop/Openclaw && /usr/bin/python3 tools/scheduler.py >> logs/scheduler.log 2>&1
 # 6:00pm - Evening check
 0 18 * * * cd /Users/jcore/Desktop/Openclaw && /usr/bin/python3 tools/scheduler.py >> logs/scheduler.log 2>&1
+# Every 15 min - Meeting orchestrator watchdog alerting
+*/15 * * * * cd /Users/jcore/Desktop/Openclaw && /usr/bin/python3 tools/meeting_orchestrator_health_check.py >> logs/meeting_orchestrator_health.log 2>&1
 EOF
 
 crontab /tmp/current_crontab

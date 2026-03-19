@@ -35,7 +35,7 @@ Do **not** reply with text only (e.g. "I'll fetch it" or "Let me process that").
 ## Protocol for "set up a cron job" or "create an automation"
 
 1. Use **write** or **edit** to create/update the script or crontab *file* (e.g. a `.sh` script or a file with cron lines).
-2. In your reply, **do not** say the automation is "installed" or "active". Say you created the files and give the **exact command** the user must run to activate (e.g. `bash tools/install_cron.sh` or “Run `crontab -e` and add these lines: …”).
+2. If you **have exec**: run the activation command yourself, then say it is active. If you **do not have exec**: do not say the automation is "installed" or "active"; say you created the files and give the **exact command** the user must run to activate (e.g. `bash tools/install_cron.sh` or “Run `crontab -e` and add these lines: …”).
 
 ## Paths
 

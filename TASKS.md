@@ -4,21 +4,23 @@ Gerald may append to Active when given a new task; move items to Completed when 
 
 ---
 
+## Pending activation (run in Terminal)
+
+**When Gerald creates a cron job, LaunchAgent, or script that needs to be run once to activate, he adds it here.** You run the command; then tell him it’s done so he can remove or check it off.
+
+- _(None right now. After you run `turn_on_team.sh`, this stays empty unless Gerald adds a new automation.)_
+
+---
+
 ## Active Tasks
 
-- **Build meeting transcription integration** — In progress. Creating Gmail OAuth client, Recall.ai API wrapper, and customer classification system. Started 2026-03-06 13:30.
 - **Weekly OpenClaw security review** — Check OpenClaw GitHub releases, security advisories, and changelog for updates. Analyze before upgrading. Added 2026-03-08.
 - **Enable X API write permissions for outreach** — Go to X Developer Portal, edit app "Jmellet_AGT_Gerald_V2", change permissions to "Read, Write, and DMs", generate new OAuth 2.0 tokens. Send reminder Wednesday 9am CST. Added 2026-03-10.
 
 ## Completed Tasks
 
 - **Cancel extra Cursor.ai account** — Sent reminder email to jenmellet@gmail.com on 2026-03-10. Completed 2026-03-10.
-
----
-
-## Completed Tasks
-
-_(none)_
+- **Build meeting transcription integration** — Gmail OAuth, Recall.ai client, meeting orchestrator, iCal parsing, transcript API, LaunchAgent/setup script, summary emails. Completed 2026-03-11.
 
 ---
 

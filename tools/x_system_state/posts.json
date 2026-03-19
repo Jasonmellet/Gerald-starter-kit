@@ -56,7 +56,35 @@
         "rank_score": 0.8075
       },
       "dry_run": false
+    },
+    "dryrun_20260315T173940Z": {
+      "post_id": "dryrun_20260315T173940Z",
+      "text": "A surprising number of Founder/Owner teams hit the same wall.\n\nLeads from paid campaigns sit untouched for hours and nobody gets alerted.\n\nThat is why traffic is up but qualified demand is flat.\n\nWhere does ownership break first in your process?",
+      "published_at": "2026-03-15T17:39:40.708661+00:00",
+      "topic": "seo",
+      "winner": {
+        "candidate_id": "20260315T173911Z_1",
+        "topic": "seo",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Traffic is up but qualified demand is flat.",
+        "hook_type": "content_intel",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Operational failure mode tied to topic seo. Insights sampled: - This one hits:  Asked AI to analyse FocusMap for SEO visibility and it told me this. \"It's basically invisible.\"  Need",
+        "text": "A surprising number of Founder/Owner teams hit the same wall.\n\nLeads from paid campaigns sit untouched for hours and nobody gets alerted.\n\nThat is why traffic is up but qualified demand is flat.\n\nWhere does ownership break first in your process?",
+        "scores": {
+          "hook_strength": 8,
+          "specificity": 8,
+          "authority": 8,
+          "engagement_potential": 7,
+          "icp_fit": 9,
+          "total": 40
+        },
+        "reasoning": "Operational failure mode tied to topic seo. Insights sampled: - This one hits:  Asked AI to analyse FocusMap for SEO visibility and it told me this. \"It's basically invisible.\"  Need",
+        "rank_score": 0.8
+      },
+      "dry_run": true
     }
   },
-  "latest_post_id": "2032560863484248090"
+  "latest_post_id": "dryrun_20260315T173940Z"
 }

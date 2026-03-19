@@ -28,7 +28,7 @@ launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.plist
 1. **New chat** in the OpenClaw Control UI (so the session uses the new primary model).
 2. Send: *"Read notes.md, ideas.txt, and sample.csv and write a short summary to summary.md."*
 3. **Check 1:** In the UI or session, the assistant should show **tool use** (read/write) and then a short reply. No “roleplay” summary only in chat.
-4. **Check 2:** Open `agent-lab/summary.md` — it should contain a real summary, not the original placeholder.
+4. **Check 2:** Open `summary.md` in the workspace the agent used (repo root or `agent-lab/` if that was the sandbox). It should contain a real summary, not a placeholder. If your sandbox is `agent-lab/`, ensure it has `notes.md`, `ideas.txt`, and `sample.csv` before running the test.
 5. **Debug log (optional):** Logs are at `/tmp/openclaw/openclaw-YYYY-MM-DD.log` (or path in `logging.file` if set). At `logging.level: "debug"` you should see request/response detail, including whether tool definitions are sent and whether the model returns tool_calls.
 
 If tool calls still do not appear or `summary.md` is unchanged, capture the latest session JSONL (under `~/.openclaw/agents/main/sessions/`) and the relevant debug log lines for further diagnosis.

@@ -127,7 +127,7 @@ def format_tweet(tweet: dict, username: str) -> str:
     return "\n".join(lines)
 
 
-def check_user(username: str, user_id: str, state: dict) -> tuple:
+def check_user(username: str, user_id: str, state: dict, catch_up: bool = True) -> tuple:
     """Check a single user for new tweets. Returns (new_tweets, updated_state)."""
     last_seen_id = state.get(username)
     tweets = get_recent_tweets(user_id, last_seen_id)
@@ -141,6 +141,13 @@ def check_user(username: str, user_id: str, state: dict) -> tuple:
         tweet_id = int(tweet.get("id", 0))
         if not last_seen_id or tweet_id > int(last_seen_id):
             new_tweets.append(tweet)
+    
+    # Catch-up mode: if this is a new user (no state), alert on their most recent tweet
+    if catch_up and not last_seen_id and tweets:
+        # Get the single most recent tweet (first in the list)
+        most_recent = tweets[0]
+        new_tweets = [most_recent]
+        print(f"  🆕 @{username}: New user - catching up with most recent tweet")
     
     if new_tweets:
         # Update state with newest tweet ID

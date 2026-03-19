@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import subprocess
 import sys
 import traceback
@@ -55,6 +56,40 @@ def _send_failure_alert(reason: str, mode: str, cfg: Dict[str, Any]) -> None:
         pass
 
 
+def _error_signature(mode: str, reason: str) -> str:
+    first_line = (reason or "").strip().splitlines()[0].strip().lower()
+    normalized = " ".join(first_line.split())
+    return hashlib.sha256(f"{mode}:{normalized}".encode("utf-8")).hexdigest()[:16]
+
+
+def _should_send_failure_alert(state: StateManager, cfg: Dict[str, Any], mode: str, reason: str) -> bool:
+    cooldown_mins = int(cfg.get("alert_cooldown_minutes", 60))
+    signature = _error_signature(mode, reason)
+    data = state.load_pipeline_state()
+    last_alert = data.get("last_alert") or {}
+    if (
+        last_alert.get("signature") == signature
+        and last_alert.get("mode") == mode
+        and last_alert.get("sent_at")
+    ):
+        try:
+            dt = datetime.fromisoformat(str(last_alert["sent_at"]))
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            if datetime.now(timezone.utc) - dt < timedelta(minutes=cooldown_mins):
+                return False
+        except Exception:
+            pass
+    data["last_alert"] = {
+        "signature": signature,
+        "mode": mode,
+        "sent_at": utc_now_iso(),
+        "error_preview": (reason or "").splitlines()[0][:200],
+    }
+    state.save_pipeline_state(data)
+    return True
+
+
 def _latest_artifact(path: Path, prefix: str) -> Optional[Path]:
     files = sorted(path.glob(f"{prefix}_*.json"))
     return files[-1] if files else None
@@ -69,6 +104,28 @@ def _load_artifact(path: Optional[Path]) -> Dict[str, Any]:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return {}
+
+
+def _load_content_context(paths, cfg: Dict[str, Any]) -> Dict[str, Any]:
+    rel = str(cfg.get("content_context_dir", "content")).strip() or "content"
+    content_dir = paths.config_dir / rel
+    files = {
+        "inspiration_library": "inspiration_library.json",
+        "voice_examples": "voice_examples.json",
+        "contrarian_triggers": "contrarian_triggers.json",
+        "icp_definition": "icp_definition.json",
+        "hard_constraints": "hard_constraints.json",
+        "cta_preferences": "cta_preferences.json",
+        "score_weights": "score_weights.json",
+    }
+    out: Dict[str, Any] = {}
+    for key, name in files.items():
+        p = content_dir / name
+        if p.exists():
+            out[key] = _load_artifact(p)
+        else:
+            out[key] = [] if key in {"inspiration_library", "voice_examples", "contrarian_triggers"} else {}
+    return out
 
 
 def _log_stage(state: StateManager, stage: str, extra: Optional[Dict[str, Any]] = None) -> None:
@@ -109,16 +166,36 @@ def run_draft_mode(paths, state: StateManager, cfg: Dict[str, Any], logger, ai: 
 
     plan = build_opportunities(patterns.summary, paths.data_dir / "decisions", primary_theme=primary_theme)
     logger.info(f"[draft] wrote opportunities {plan.artifact_path}")
+    content_context = _load_content_context(paths, cfg)
     candidates = generate_candidates(
         plan.opportunities,
         paths.data_dir / "posts",
         ai_helper=ai,
         max_candidates=int(cfg.get("candidate_batch_size", 10)),
         min_total_score=int(cfg.get("min_total_score", 35)),
+        min_opener_uniqueness=float(cfg.get("min_opener_uniqueness", 0.6)),
         content_intel_enabled=bool(cfg.get("content_intel_enabled", True)),
+        degraded_mode_skip_publish=bool(cfg.get("degraded_mode_skip_publish", True)),
         research_items=items,
+        content_context=content_context,
     )
     logger.info(f"[draft] wrote candidates {candidates.artifact_path}")
+    gen = candidates.telemetry.get("generation", [])
+    if gen:
+        g0 = gen[0]
+        logger.info(
+            "[draft] generation telemetry: "
+            f"topic={g0.get('topic')} llm_used={g0.get('llm_used')} "
+            f"fallback_used={g0.get('fallback_used')} reason={g0.get('fallback_reason')} "
+            f"api_status={g0.get('api_status')} model={g0.get('model')}"
+        )
+    div = candidates.telemetry.get("diversity", {})
+    logger.info(
+        "[draft] diversity telemetry: "
+        f"opener_ratio={div.get('opener_uniqueness_ratio')} "
+        f"lexical_variance={div.get('lexical_variance')} "
+        f"degraded={div.get('degraded')} reason={div.get('degraded_reason')}"
+    )
     ranked = rank_candidates(
         candidates.candidates,
         paths.data_dir / "decisions",
@@ -164,13 +241,29 @@ def _text_is_duplicate_of_recent(candidate_text: str, recent_texts: List[str], p
     return False
 
 
-def run_publish_mode(client: XClient, paths, state: StateManager, cfg: Dict[str, Any], logger, dry_run: bool) -> Dict[str, Any]:
+def _is_real_tweet_id(post_id: Optional[str]) -> bool:
+    value = str(post_id or "").strip()
+    return bool(value) and value.isdigit()
+
+
+def run_publish_mode(
+    client: XClient,
+    paths,
+    state: StateManager,
+    cfg: Dict[str, Any],
+    logger,
+    dry_run: bool,
+    ai: AIHelper,
+) -> Dict[str, Any]:
     ranked_artifact = _latest_artifact(paths.data_dir / "decisions", "ranked")
     ranked_data = _load_artifact(ranked_artifact)
     ranked_list = ranked_data.get("ranked", [])
     winner = ranked_data.get("winner")
 
     if not ranked_list:
+        if bool(cfg.get("degraded_mode_skip_publish", True)):
+            logger.warning("[publish] no ranked candidates; skipping publish in degraded mode")
+            return {"post_id": None, "skipped_degraded": True, "reason": "no ranked candidates"}
         raise RuntimeError("No ranked candidates found. Run draft mode first.")
 
     # Avoid reposting the same or near-identical content (e.g. last post had zero interactions)
@@ -199,7 +292,43 @@ def run_publish_mode(client: XClient, paths, state: StateManager, cfg: Dict[str,
         )
         return {"post_id": None, "skipped_duplicate": True, "reason": "all candidates too similar to recent posts"}
 
-    winner = chosen
+    winner = dict(chosen)
+    if bool(cfg.get("opus_final_enabled", True)):
+        content_context = _load_content_context(paths, cfg)
+        shortlist_size = max(1, int(cfg.get("opus_final_shortlist_size", 5)))
+        shortlist = [dict(c) for c in ranked_list[start_index : start_index + shortlist_size]]
+        topic = str(winner.get("topic", "general_growth"))
+        opus = ai.select_final_post_with_opus(
+            topic=topic,
+            shortlist=shortlist,
+            content_context=content_context,
+        )
+        if opus.get("status") == "ok" and opus.get("selected_text"):
+            selected_id = str(opus.get("selected_candidate_id") or "")
+            if selected_id:
+                match = next((c for c in shortlist if str(c.get("candidate_id")) == selected_id), None)
+                if match:
+                    winner = dict(match)
+            winner["text"] = str(opus["selected_text"])
+            winner["final_selection"] = {
+                "source": "opus_final",
+                "status": opus.get("status"),
+                "model": opus.get("model"),
+                "why": opus.get("why"),
+                "selected_candidate_id": opus.get("selected_candidate_id"),
+            }
+            logger.info(
+                f"[publish] opus final selected model={opus.get('model')} selected_id={opus.get('selected_candidate_id')}"
+            )
+        else:
+            winner["final_selection"] = {
+                "source": "ranked_fallback",
+                "status": opus.get("status"),
+                "model": opus.get("model"),
+                "why": opus.get("why"),
+            }
+            logger.info(f"[publish] opus final unavailable; using ranked fallback status={opus.get('status')}")
+
     result = publish_winner(client, winner, paths.data_dir / "posts", dry_run=dry_run)
     logger.info(f"[publish] post_id={result.post_id} dry_run={dry_run}")
     state.record_post(
@@ -228,6 +357,9 @@ def run_monitor_mode(
 ) -> Dict[str, Any]:
     posts_state = state.load_posts()
     target_post_id = post_id or posts_state.get("latest_post_id")
+    if target_post_id and not _is_real_tweet_id(str(target_post_id)):
+        logger.warning(f"[monitor] skipping non-real post_id: {target_post_id}")
+        target_post_id = None
     if not target_post_id and not posts_state.get("posts"):
         raise RuntimeError("No post_id available. Publish first or pass --post-id.")
 
@@ -235,7 +367,7 @@ def run_monitor_mode(
     poll = int(monitor_cfg.get("poll_interval_seconds", 600))
     window = int(monitor_cfg.get("max_window_seconds", 0))
     lookback_hours = int(monitor_cfg.get("recent_post_lookback_hours", 48))
-    max_posts = int(monitor_cfg.get("max_posts_per_monitor_run", 6))
+    max_posts = int(cfg.get("monitor_recent_real_posts", monitor_cfg.get("max_posts_per_monitor_run", 6)))
 
     target_post_ids: List[str] = []
     if target_post_id:
@@ -249,6 +381,8 @@ def run_monitor_mode(
             published_at = p.get("published_at")
             if not pid or not published_at:
                 continue
+            if not _is_real_tweet_id(str(pid)):
+                continue
             try:
                 dt = datetime.fromisoformat(str(published_at))
                 if dt.tzinfo is None:
@@ -258,6 +392,17 @@ def run_monitor_mode(
             if dt >= cutoff:
                 recent_ids.append(str(pid))
         target_post_ids = list(dict.fromkeys(recent_ids))[-max_posts:]
+
+    if not target_post_ids:
+        logger.info("[monitor] no eligible real posts found; skipping monitor pass")
+        return {
+            "post_ids": [],
+            "monitor_paths": [],
+            "classified_count": 0,
+            "reply_actions_path": "",
+            "dm_actions_paths": [],
+            "skipped_no_targets": True,
+        }
 
     all_classified_items: List[Dict[str, Any]] = []
     monitor_artifacts: List[str] = []
@@ -334,7 +479,7 @@ def run_full(
     _log_stage(state, "draft")
     out.update(run_draft_mode(paths, state, cfg, logger, ai))
     _log_stage(state, "publish")
-    out.update(run_publish_mode(client, paths, state, cfg, logger, dry_run))
+    out.update(run_publish_mode(client, paths, state, cfg, logger, dry_run, ai))
     _log_stage(state, "monitor")
     out.update(run_monitor_mode(client, paths, state, cfg, logger, dry_run, post_id=out.get("post_id"), ai=ai))
     _log_stage(state, "complete", {"last_run_id": out.get("post_id")})
@@ -366,7 +511,7 @@ def main() -> None:
         elif args.mode == "draft":
             output = run_draft_mode(paths, state, cfg, logger, ai)
         elif args.mode == "publish":
-            output = run_publish_mode(client, paths, state, cfg, logger, args.dry_run)
+            output = run_publish_mode(client, paths, state, cfg, logger, args.dry_run, ai)
         elif args.mode == "monitor":
             output = run_monitor_mode(client, paths, state, cfg, logger, args.dry_run, args.post_id, ai)
         elif args.mode == "full":
@@ -386,7 +531,10 @@ def main() -> None:
     except Exception as e:
         reason = f"{type(e).__name__}: {e}\n\n{traceback.format_exc()}"
         logger.exception(f"[failed] mode={args.mode}")
-        _send_failure_alert(reason, args.mode, cfg)
+        if _should_send_failure_alert(state, cfg, args.mode, reason):
+            _send_failure_alert(reason, args.mode, cfg)
+        else:
+            logger.info(f"[alert] suppressed duplicate failure email by cooldown for mode={args.mode}")
         raise
 
 

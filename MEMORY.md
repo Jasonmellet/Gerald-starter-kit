@@ -14,7 +14,23 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Will build Recall.ai integration with local post-processing
 - Need to set up daily maintenance workflow (per Matthew Berman video recommendations)
 
-**Pending:**
-- Build Recall.ai skill for meeting transcription
-- Extract and classify customer mentions from transcripts
-- Set up cron jobs for daily reviews
+## 2026-03-11 — Meeting Transcription System Completed
+
+**Key Events:**
+- Built complete meeting transcription integration with Recall.ai
+- Gmail OAuth, Recall.ai client, meeting orchestrator, iCal parsing, transcript API all working
+- LaunchAgent and setup script created
+- Summary emails functional
+
+**Decisions Made:**
+- System runs continuously to auto-join meetings
+- Daily digest emails at 9am with X monitor findings
+
+## 2026-03-19 — Daily Maintenance Review
+
+**Status:**
+- All core systems operational
+- X monitoring active (daily at ~$0.11/day)
+- Task reminder system checking TASKS.md deadlines
+- Security review scheduled weekly (Mondays 9am)
+- CRO skill monitoring Upwork/X API approvals every 2 days

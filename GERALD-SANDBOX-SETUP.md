@@ -103,7 +103,7 @@ Expected behavior: Gerald uses the `read` tool on files in the workspace (notes.
 ## Files in this repo
 
 - **`openclaw-gerald-sandbox.json`** – Hardened OpenClaw config (apply to `~/.openclaw/openclaw.json` on the research Mac).
-- **`agent-lab/`** – Template sandbox (notes.md, ideas.txt, sample.csv, summary.md, logs/). Copy or re-create under `/Users/gerald/agent-lab` (or your chosen path) on the Mac.
+- **`agent-lab/`** – Optional sandbox folder (see `agent-lab/README.md`). In-repo it only has a CRO pointer. For a full sandbox on the Mac, create or copy `notes.md`, `ideas.txt`, `sample.csv`, `summary.md`, `logs/` under `/Users/gerald/agent-lab` (or your chosen path).
 - **`GERALD-SANDBOX-SETUP.md`** – This file (setup, security description, checklist, test prompt).
 
 Do not enable exec, elevated mode, or remote model providers in this sandbox. It is for research and experimentation only, not for autonomous or production use.

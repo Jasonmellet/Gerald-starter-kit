@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Run Gerald CLI from project root. Use python3 if python is not available.
+cd "$(dirname "$0")"
+export PYTHONPATH="$PWD"
+if command -v python3 &>/dev/null; then
+  exec python3 -m app.cli.main "$@"
+else
+  exec python -m app.cli.main "$@"
+fi

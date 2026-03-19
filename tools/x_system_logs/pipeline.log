@@ -35,3 +35,19 @@
 2026-03-13 16:00:49,242 | INFO | [monitor] reply actions=0
 2026-03-13 16:00:49,243 | INFO | [monitor] dm actions=0
 2026-03-13 16:00:49,243 | INFO | [done] mode=monitor output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T21-00-49.243145+00-00.json
+2026-03-13 16:26:43,163 | INFO | [start] mode=research dry_run=False
+2026-03-13 16:26:51,508 | INFO | [research] wrote /Users/jcore/Desktop/Openclaw/tools/x_system_data/research/research_20260313T212643Z.json with 597 items
+2026-03-13 16:26:51,508 | INFO | [done] mode=research output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-13T21-26-51.508573+00-00.json
+2026-03-15 12:39:02,820 | INFO | [start] mode=full dry_run=True
+2026-03-15 12:39:11,334 | INFO | [research] wrote /Users/jcore/Desktop/Openclaw/tools/x_system_data/research/research_20260315T173902Z.json with 593 items
+2026-03-15 12:39:11,339 | INFO | [draft] wrote pattern summary /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/patterns_20260315T173911Z.json
+2026-03-15 12:39:11,339 | INFO | [draft] theme for this run: seo (next run: ai_ops)
+2026-03-15 12:39:11,340 | INFO | [draft] wrote opportunities /Users/jcore/Desktop/Openclaw/tools/x_system_data/decisions/plan_20260315T173911Z.json
+2026-03-15 12:39:40,704 | INFO | [draft] wrote candidates /Users/jcore/Desktop/Openclaw/tools/x_system_data/posts/candidates_20260315T173911Z.json
+2026-03-15 12:39:40,705 | INFO | [draft] winner candidate_id=20260315T173911Z_1 score=0.8
+2026-03-15 12:39:40,708 | INFO | [publish] post_id=dryrun_20260315T173940Z dry_run=True
+2026-03-15 12:39:40,711 | INFO | [monitor] collected 0 replies for post_id=dryrun_20260315T173940Z
+2026-03-15 12:39:40,712 | INFO | [monitor] classified 0 replies across 1 posts
+2026-03-15 12:39:40,713 | INFO | [monitor] reply actions=0
+2026-03-15 12:39:40,714 | INFO | [monitor] dm actions=0
+2026-03-15 12:39:40,715 | INFO | [done] mode=full output_saved=/Users/jcore/Desktop/Openclaw/tools/x_system_data/learning/run_2026-03-15T17-39-40.715370+00-00.json

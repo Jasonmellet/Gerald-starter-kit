@@ -1,0 +1,46 @@
+{
+  "forbidden_phrases": [
+    "Hot take",
+    "Most teams",
+    "Most businesses",
+    "The real problem is",
+    "The fix is",
+    "Thoughts?",
+    "Agree?",
+    "What do you think?",
+    "10 tips for",
+    "Ultimate guide"
+  ],
+  "forbidden_claims": [
+    "guaranteed results",
+    "fabricated numbers"
+  ],
+  "style_rules": [
+    "no emojis",
+    "no hashtags",
+    "no semicolons",
+    "no em dash",
+    "use three dots for pacing when needed"
+  ],
+  "formatting_rules": [
+    "short paragraphs",
+    "one idea per paragraph",
+    "mobile readable"
+  ],
+  "tone_rules": [
+    "operator voice",
+    "direct and clear",
+    "no hype language",
+    "avoid corporate jargon",
+    "avoid generic AI style writing"
+  ],
+  "perspective_rules": [
+    "write from experience",
+    "prefer insights over tips",
+    "prefer observations over advice"
+  ],
+  "length": {
+    "min_words": 35,
+    "max_words": 110
+  }
+}

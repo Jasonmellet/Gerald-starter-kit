@@ -66,6 +66,8 @@ class MeetingOrchestrator:
         self.poll_interval = poll_interval
         self.meetings_dir = meetings_dir
         self.state_file = state_file
+        self.invite_scan_limit = int(os.environ.get("MEETING_INVITE_SCAN_LIMIT", "200"))
+        self.waiting_room_timeout_minutes = int(os.environ.get("RECALL_WAITING_ROOM_TIMEOUT_MINUTES", "20"))
         
         # Clients
         self.recall = None
@@ -170,6 +172,9 @@ class MeetingOrchestrator:
         """One complete poll cycle."""
         print(f"[{datetime.now().strftime('%H:%M:%S')}] Polling..." + (" (recheck all)" if recheck_all else ""))
         
+        # Step 0: Clean up stale waiting-room or stuck bots from older runs.
+        self._cleanup_stale_remote_bots()
+
         # Step 1: Check for completed bots
         self._check_completed_bots()
         
@@ -184,12 +189,104 @@ class MeetingOrchestrator:
         
         # Update poll interval for next cycle
         self.current_poll_interval = self._get_dynamic_poll_interval()
+
+    def _parse_iso_datetime(self, value: Optional[str]) -> Optional[datetime]:
+        if not value:
+            return None
+        try:
+            return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except Exception:
+            return None
+
+    def _cleanup_stale_remote_bots(self):
+        """
+        Ensure Gerald does not stay in a waiting room forever.
+
+        Because launchd runs this script with --once, in-memory tracking resets each run.
+        This pass inspects remote Recall bot state directly and exits stale bots.
+        """
+        try:
+            bots = self.recall.list_bots()
+        except Exception as e:
+            print(f"Warning: could not list Recall bots for cleanup: {e}")
+            return
+
+        now = datetime.now().astimezone()
+        stale_statuses = {"in_waiting_room", "joining_call", "in_lobby"}
+        completed_statuses = {"done", "recording_done", "call_ended"}
+        stale = []
+        completed_meeting_keys = set()
+
+        for bot in bots:
+            bot_name = (bot.get("bot_name") or "").strip()
+            if not bot_name.startswith("Gerald"):
+                continue
+            status = (bot.get("status") or "").strip().lower()
+            if status not in completed_statuses:
+                continue
+            meeting_url = bot.get("meeting_url") or {}
+            meeting_key = f"{meeting_url.get('platform')}:{meeting_url.get('meeting_id')}"
+            completed_meeting_keys.add(meeting_key)
+
+        for bot in bots:
+            bot_name = (bot.get("bot_name") or "").strip()
+            if not bot_name.startswith("Gerald"):
+                continue
+
+            status = (bot.get("status") or "").strip().lower()
+            if status not in stale_statuses:
+                continue
+
+            meeting_url = bot.get("meeting_url") or {}
+            meeting_key = f"{meeting_url.get('platform')}:{meeting_url.get('meeting_id')}"
+            if meeting_key in completed_meeting_keys:
+                # A completed Gerald bot already exists for this meeting.
+                # Any waiting-room duplicate should be removed immediately.
+                stale.append((bot, float("inf")))
+                continue
+
+            # Prefer join_at; fallback to last status_change timestamp.
+            joined_at = self._parse_iso_datetime(bot.get("join_at"))
+            if not joined_at:
+                changes = bot.get("status_changes") or []
+                if changes:
+                    joined_at = self._parse_iso_datetime(changes[-1].get("created_at"))
+            if not joined_at:
+                continue
+
+            age_min = (now - joined_at).total_seconds() / 60.0
+            if age_min >= self.waiting_room_timeout_minutes:
+                stale.append((bot, age_min))
+
+        for bot, age_min in stale:
+            bot_id = bot.get("id")
+            status = bot.get("status")
+            print(f"Stale bot cleanup: {bot_id[:8]}... status={status} age={age_min:.1f}m")
+
+            # First ask it to leave; then attempt delete.
+            try:
+                if self.recall.leave_call(bot_id):
+                    print("  ✓ leave_call sent")
+                else:
+                    print("  Warning: leave_call returned false")
+            except Exception as e:
+                print(f"  Warning: leave_call failed: {e}")
+
+            try:
+                # Give Recall a short moment to transition status.
+                time.sleep(1)
+                if self.recall.delete_bot(bot_id):
+                    print("  ✓ deleted stale bot")
+                else:
+                    print("  Note: delete not allowed yet (will retry next cycle)")
+            except Exception as e:
+                print(f"  Warning: delete stale bot failed: {e}")
     
     def _check_updated_invites(self):
         """Check for updated calendar invites (reschedules)."""
         try:
             # Get recent invites (last hour)
-            invites = self.gmail.get_calendar_invites(max_results=50)
+            invites = self.gmail.get_calendar_invites(max_results=self.invite_scan_limit)
             
             for invite in invites:
                 meeting_url = invite.get('meeting_url')
@@ -226,7 +323,7 @@ class MeetingOrchestrator:
     def _check_new_invites(self, recheck_all: bool = False):
         """Check Gmail for new calendar invites. If recheck_all, re-evaluate every invite (e.g. to join a meeting that was skipped)."""
         try:
-            invites = self.gmail.get_calendar_invites(max_results=50)
+            invites = self.gmail.get_calendar_invites(max_results=self.invite_scan_limit)
             
             new_invites = 0
             for invite in invites:
@@ -530,15 +627,31 @@ class MeetingOrchestrator:
         
         # Send email
         gmail = GmailClient()
-        if gmail.authenticate():
+        # Meeting summary delivery requires gmail.send scope.
+        if gmail.authenticate_with_send():
             gmail.send_email(
                 to="jason@allgreatthings.io",
                 subject=subject_line,
                 body=body
             )
             print(f"  ✓ Email sent to jason@allgreatthings.io")
+            self._log_meeting_to_daily_memory(analysis)
         else:
             print(f"  ✗ Could not authenticate Gmail")
+
+    def _log_meeting_to_daily_memory(self, analysis: Dict[str, Any]):
+        """Append one line to memory/YYYY-MM-DD.md so Gerald (the agent) sees his meeting in his daily read."""
+        try:
+            from datetime import datetime
+            today = datetime.now().strftime("%Y-%m-%d")
+            subject = analysis.get('subject', 'Meeting')
+            path = os.path.join(os.path.dirname(self.meetings_dir), f"{today}.md")
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            line = f"- **Meetings:** Attended \"{subject}\"; summary emailed to jason@allgreatthings.io.\n"
+            with open(path, "a") as f:
+                f.write(line)
+        except Exception as e:
+            print(f"  Warning: could not log to daily memory: {e}")
     
     def _load_state(self):
         """Load persistent state from disk."""

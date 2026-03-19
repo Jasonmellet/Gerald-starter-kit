@@ -64,12 +64,8 @@ Update `USER.md` with:
 
 ```
 /Users/jcore/Desktop/Openclaw/
-├── agent-lab/           # Personality & memory files
-│   ├── SOUL.md
-│   ├── IDENTITY.md
-│   ├── USER.md
-│   ├── MEMORY.md
-│   └── BOOTSTRAP.md     # This file
+├── agent-lab/           # Optional sandbox folder (see agent-lab/README.md)
+│   └── CRO-CHECKLIST.md # Pointer to HEARTBEAT CRO item
 ├── credentials/         # OAuth tokens & secrets (gitignored)
 ├── memory/              # Daily notes & meeting logs
 │   ├── meetings/        # Meeting transcripts & summaries
@@ -78,6 +74,7 @@ Update `USER.md` with:
 ├── tools/               # Python scripts
 ├── sources/             # YouTube transcripts & raw data
 ├── outputs/             # Analysis outputs
+├── SOUL.md, IDENTITY.md, USER.md, MEMORY.md, HEARTBEAT.md, AGENTS.md  # Personality & ops (at root)
 └── .env                 # API keys
 ```
 

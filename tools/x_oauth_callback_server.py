@@ -34,8 +34,10 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 CREDENTIALS_DIR = REPO_ROOT / "credentials"
 TOKENS_FILE = CREDENTIALS_DIR / "x_oauth_tokens.json"
 
-
-def load_env():
+try:
+    from dotenv import load_dotenv
+    load_dotenv(REPO_ROOT / ".env")
+except ImportError:
     env_path = REPO_ROOT / ".env"
     if env_path.exists():
         with open(env_path) as f:
@@ -44,9 +46,6 @@ def load_env():
                 if line and "=" in line and not line.startswith("#"):
                     key, val = line.split("=", 1)
                     os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
-
-
-load_env()
 
 CLIENT_ID = os.environ.get("X_CLIENT_ID")
 CALLBACK_BASE = (os.environ.get("X_CALLBACK_BASE_URL") or "").rstrip("/")
