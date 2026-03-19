@@ -19,6 +19,7 @@ sources/*
 
 # OpenClaw workspace state (local only)
 .openclaw/
+agent-lab/
 
 # Local runtime logs/state/artifacts (do not commit)
 logs/*
