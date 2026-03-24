@@ -49,3 +49,11 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Meeting intelligence and customer insight extraction
 - AI workflow automation
 - Agent-assisted business operations
+
+## 2026-03-24 — First Business Memory Entries
+
+**Durable business context:**
+- Created `BUSINESS-MEMORY.md` as a lightweight place for important clients, contacts, and recurring business context.
+- First client entry: Boar Blanket.
+- Boar Blanket work includes SEO, content creation, blueprint/strategy, and 5 blog posts per month published to WordPress draft status around the 20th.
+- Key relationship: Casey Fuerst at Tic Tac Toe Marketing Agency is the main contact and an important repeat-work source; Jason has worked with her for about 1 year.

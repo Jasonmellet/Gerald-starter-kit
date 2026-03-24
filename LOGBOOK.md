@@ -29,4 +29,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-24 13:10 CDT | Upgrade Gerald long-term business memory with durable rules from conversation | MEMORY.md, LOGBOOK.md | MEMORY.md, memory/2026-03-24.md, LOGBOOK.md | ok | Made the memory upgrade real by encoding Jason's preference for stronger memory/pattern recall over unnecessary infrastructure and preserving recurring opportunity areas. |
 
+| 2026-03-24 13:16 CDT | Create lightweight business memory and add first client entry | MEMORY.md, TASKS.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Boar Blanket as Client 1 with Casey Fuerst / Tic Tac Toe Marketing Agency as the primary repeat-work contact and captured monthly WordPress draft publishing workflow. |
+
 _(Your agent adds new rows below as tasks are completed.)_
