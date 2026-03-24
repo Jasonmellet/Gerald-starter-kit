@@ -34,3 +34,18 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Task reminder system checking TASKS.md deadlines
 - Security review scheduled weekly (Mondays 9am)
 - CRO skill monitoring Upwork/X API approvals every 2 days
+
+## 2026-03-24 — Business Memory Direction
+
+**Key Decision:**
+- Jason clarified that the goal is better long-term memory and pattern recall, not building unnecessary new infrastructure.
+
+**What to remember going forward:**
+- Favor lightweight memory discipline over overbuilt systems unless a larger build is clearly needed.
+- Preserve recurring business patterns, strategic preferences, promising opportunity areas, and persistent blockers.
+- Store the signal, not the whole conversation: remember what will improve the next decision, not just what happened.
+
+**Recurring opportunity areas worth retaining:**
+- Meeting intelligence and customer insight extraction
+- AI workflow automation
+- Agent-assisted business operations
