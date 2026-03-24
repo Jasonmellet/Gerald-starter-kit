@@ -63,4 +63,6 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Camp Lakota uses a more efficient direct publishing workflow through the WordPress REST API from one of Jason's repos via Cursor.ai.
 - Added Theo Transformation Advisory as a higher-value account through Phil Ayres at Ron Media Partners.
 - Theo includes **$2,500/month** for custom email outreach plus lead sourcing/enrichment, and **about $1,250/month** more for a 10-piece recurring content package including publishing.
-- Important pattern: higher-value work includes custom outreach/revenue services layered with recurring content, not just low-priced content production alone.
+- Added Stoneford as a new Casey/TTT client on a **3-month contract** at **$2,000/month** for church lead sourcing in Virginia and Florida plus building an email outreach system.
+- Stoneford uses Jason's own stack: Spiffy for Google Maps lead crawling/enrichment and a custom-built outreach tool for emailing.
+- Important pattern: higher-value work includes custom outreach/revenue services and Jason's own systems leverage, not just low-priced content production alone.

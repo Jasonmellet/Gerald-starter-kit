@@ -52,6 +52,18 @@ Purpose:
 - **Total monthly value:** **About $3,750 USD/month**
 - **Notes:** This is a significantly higher-value account with both outbound/revenue work and recurring content/publishing work.
 
+### Client 5 — Stoneford
+- **Client:** Stoneford
+- **Agency contact:** Casey Fuerst
+- **Agency relationship:** New client from Casey at Tic Tac Toe Marketing Agency
+- **Contract structure:** 3-month contract
+- **Price:** **$2,000 USD/month**
+- **Work type:** Lead sourcing for churches in Virginia and Florida, plus building an email outreach system to contact them
+- **Project stage:** Midway through the contract and about to start emailing prospects soon
+- **Lead sourcing workflow:** Jason collects leads through a system called Spiffy, which crawls Google Maps for businesses and then finds/enriches the leads
+- **Outreach workflow:** Jason built a custom email outreach tool for this project
+- **Notes:** This is another higher-value outbound/revenue-style engagement and a stronger use of Jason's custom systems than low-priced content-only work.
+
 ## Business Notes
 
 - **Important agency contact:** Casey Fuerst at Tic Tac Toe Marketing Agency is a key repeat-work source.
@@ -61,3 +73,4 @@ Purpose:
 - **Operational issue:** HogEye Cameras has a serious approval bottleneck; content can sit for months waiting for approval.
 - **Higher-efficiency workflow example:** Camp Lakota content is published directly via the WordPress REST API from Jason's repo workflow using Cursor.ai.
 - **High-value service mix example:** Theo Transformation Advisory combines outbound email/lead sourcing/enrichment work with a recurring content package, making it a more valuable account structure.
+- **Custom systems leverage example:** Stoneford uses Jason's own lead sourcing and outreach stack (Spiffy + custom email outreach tool) for a targeted church outreach campaign.

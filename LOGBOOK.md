@@ -37,4 +37,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-24 13:27 CDT | Add Theo Transformation Advisory as Client 4 in business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Theo Transformation Advisory with Phil Ayres / Ron Media Partners as agency contact, including $2,500/month outreach + lead sourcing/enrichment work and about $1,250/month for 10 pieces of recurring content including publishing. |
 
+| 2026-03-24 13:29 CDT | Add Stoneford as Client 5 in business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Stoneford as a new Casey/TTT client with a 3-month $2,000/month contract for church lead sourcing in VA/FL and a custom outreach system, using Spiffy plus Jason's own outreach tool. |
+
 _(Your agent adds new rows below as tasks are completed.)_
