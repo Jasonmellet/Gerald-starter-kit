@@ -61,3 +61,6 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Important commercial context: Boar Blanket and HogEye Cameras together currently pay **$750 USD/month total** for **10 pieces**, and HogEye Cameras has a major approval bottleneck that can delay approvals for months.
 - Added Camp Lakota as another content client: **$1,250 USD/month** for **10 pieces**, sourced through Stephanie Fox at Fox Consulting, with Hannah as the client contact.
 - Camp Lakota uses a more efficient direct publishing workflow through the WordPress REST API from one of Jason's repos via Cursor.ai.
+- Added Theo Transformation Advisory as a higher-value account through Phil Ayres at Ron Media Partners.
+- Theo includes **$2,500/month** for custom email outreach plus lead sourcing/enrichment, and **about $1,250/month** more for a 10-piece recurring content package including publishing.
+- Important pattern: higher-value work includes custom outreach/revenue services layered with recurring content, not just low-priced content production alone.

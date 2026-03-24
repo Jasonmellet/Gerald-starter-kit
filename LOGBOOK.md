@@ -35,4 +35,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-24 13:24 CDT | Add Camp Lakota client entry and workflow details to business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Camp Lakota as Client 3 with Stephanie Fox / Fox Consulting as agency source, Hannah as client contact, $1,250/month pricing for 10 pieces, and direct WordPress REST API publishing via Jason's repo/Cursor workflow. |
 
+| 2026-03-24 13:27 CDT | Add Theo Transformation Advisory as Client 4 in business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Theo Transformation Advisory with Phil Ayres / Ron Media Partners as agency contact, including $2,500/month outreach + lead sourcing/enrichment work and about $1,250/month for 10 pieces of recurring content including publishing. |
+
 _(Your agent adds new rows below as tasks are completed.)_

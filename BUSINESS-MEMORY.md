@@ -41,10 +41,23 @@ Purpose:
 - **Publishing workflow:** Jason publishes directly through the WordPress REST API via one of his project repos using Cursor.ai
 - **Notes:** This account has a more direct and automated publishing workflow than the Google Doc approval model.
 
+### Client 4 — Theo Transformation Advisory
+- **Client:** Theo Transformation Advisory
+- **Agency contact:** Phil Ayres
+- **Agency relationship:** Work comes through Ron Media Partners
+- **Work type 1:** Custom-built email marketing outreach plus lead sourcing and enrichment
+- **Price 1:** **$2,500 USD/month**
+- **Work type 2:** Set content package including publishing
+- **Price 2:** **About $1,250 USD/month** for **10 pieces**
+- **Total monthly value:** **About $3,750 USD/month**
+- **Notes:** This is a significantly higher-value account with both outbound/revenue work and recurring content/publishing work.
+
 ## Business Notes
 
 - **Important agency contact:** Casey Fuerst at Tic Tac Toe Marketing Agency is a key repeat-work source.
 - **Additional agency contact:** Stephanie Fox at Fox Consulting is the agency source for Camp Lakota.
+- **Additional agency contact:** Phil Ayres at Ron Media Partners is the agency source for Theo Transformation Advisory.
 - **Current pricing context:** Boar Blanket + HogEye Cameras together = **$750 USD/month** total for **10 content pieces**.
 - **Operational issue:** HogEye Cameras has a serious approval bottleneck; content can sit for months waiting for approval.
 - **Higher-efficiency workflow example:** Camp Lakota content is published directly via the WordPress REST API from Jason's repo workflow using Cursor.ai.
+- **High-value service mix example:** Theo Transformation Advisory combines outbound email/lead sourcing/enrichment work with a recurring content package, making it a more valuable account structure.
