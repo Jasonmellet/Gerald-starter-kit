@@ -66,3 +66,14 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Added Stoneford as a new Casey/TTT client on a **3-month contract** at **$2,000/month** for church lead sourcing in Virginia and Florida plus building an email outreach system.
 - Stoneford uses Jason's own stack: Spiffy for Google Maps lead crawling/enrichment and a custom-built outreach tool for emailing.
 - Important pattern: higher-value work includes custom outreach/revenue services and Jason's own systems leverage, not just low-priced content production alone.
+
+## 2026-03-24 — Self-Improvement Operating Rules
+
+**Decision:**
+- Jason approved a starting self-improvement budget of **$10/month** and wants real, trackable progress with human oversight on important decisions.
+
+**What to remember:**
+- Self-improvement should focus on practical usefulness: memory, prioritization, business judgment, workflow quality, and tool use.
+- Prefer free/local/workspace resources first; paid research must be intentional and auditable.
+- Give Jason concise daily updates when self-improvement work happens: what was researched, learned, changed, what it cost, and what needs approval.
+- Do real work, not abstract self-reflection or vague optimization theater.
