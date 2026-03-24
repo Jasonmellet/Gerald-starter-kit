@@ -58,4 +58,6 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Both accounts come through Casey Fuerst at Tic Tac Toe Marketing Agency, an important repeat-work source Jason has worked with for about 1 year.
 - Boar Blanket work includes SEO, content creation, blueprint/strategy, and 5 blog posts per month published to WordPress draft status around the 20th.
 - HogEye Cameras is a similar SEO/content account, but content goes to Google Docs for approval around the 20th instead of directly into WordPress.
-- Important commercial context: these two accounts together currently pay **$750 USD/month total** for **10 pieces**, and HogEye Cameras has a major approval bottleneck that can delay approvals for months.
+- Important commercial context: Boar Blanket and HogEye Cameras together currently pay **$750 USD/month total** for **10 pieces**, and HogEye Cameras has a major approval bottleneck that can delay approvals for months.
+- Added Camp Lakota as another content client: **$1,250 USD/month** for **10 pieces**, sourced through Stephanie Fox at Fox Consulting, with Hannah as the client contact.
+- Camp Lakota uses a more efficient direct publishing workflow through the WordPress REST API from one of Jason's repos via Cursor.ai.

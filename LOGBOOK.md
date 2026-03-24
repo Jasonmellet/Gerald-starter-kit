@@ -33,4 +33,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-24 13:19 CDT | Add HogEye Cameras and pricing/bottleneck context to business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added HogEye Cameras as Client 2, captured Casey/Tic Tac Toe agency relationship, Google Doc approval workflow, months-long approval bottleneck, and combined pricing context of $750/month for 10 pieces across both accounts. |
 
+| 2026-03-24 13:24 CDT | Add Camp Lakota client entry and workflow details to business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Camp Lakota as Client 3 with Stephanie Fox / Fox Consulting as agency source, Hannah as client contact, $1,250/month pricing for 10 pieces, and direct WordPress REST API publishing via Jason's repo/Cursor workflow. |
+
 _(Your agent adds new rows below as tasks are completed.)_
