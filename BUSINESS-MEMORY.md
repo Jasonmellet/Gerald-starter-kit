@@ -74,3 +74,20 @@ Purpose:
 - **Higher-efficiency workflow example:** Camp Lakota content is published directly via the WordPress REST API from Jason's repo workflow using Cursor.ai.
 - **High-value service mix example:** Theo Transformation Advisory combines outbound email/lead sourcing/enrichment work with a recurring content package, making it a more valuable account structure.
 - **Custom systems leverage example:** Stoneford uses Jason's own lead sourcing and outreach stack (Spiffy + custom email outreach tool) for a targeted church outreach campaign.
+
+## Current Business Readout
+
+### Stronger / Higher-Value Accounts
+- **Theo Transformation Advisory** — strongest current structure in this list; combines higher-ticket outreach/revenue work with recurring content/publishing.
+- **Stoneford** — strong custom outbound systems work; good example of Jason's leverage when he owns sourcing + outreach infrastructure.
+- **Camp Lakota** — healthier content account because pricing is better and the publishing workflow is direct/efficient.
+
+### Weaker / Lower-Leverage Accounts
+- **Boar Blanket + HogEye Cameras** — weak economics as currently described: $750/month combined for 10 pieces total.
+- **HogEye Cameras** is especially inefficient because approvals can take months, creating drag without clear upside.
+
+### Business Patterns Worth Remembering
+- Jason's strongest leverage is in **custom outbound, lead sourcing, enrichment, and workflow systems**, not commodity content volume alone.
+- **Direct publishing workflows** are materially healthier than approval-heavy client workflows.
+- **Agency relationships** are important deal channels, especially Casey / Tic Tac Toe.
+- Better account structures combine **strategy + systems + execution**, not just content production.

@@ -77,3 +77,4 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Prefer free/local/workspace resources first; paid research must be intentional and auditable.
 - Give Jason concise daily updates when self-improvement work happens: what was researched, learned, changed, what it cost, and what needs approval.
 - Do real work, not abstract self-reflection or vague optimization theater.
+- Self-Improvement Session 1 outcome: Gerald should explicitly synthesize business readouts and account-quality patterns, not just store raw client facts.
