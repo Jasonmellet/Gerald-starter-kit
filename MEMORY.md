@@ -54,6 +54,8 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 
 **Durable business context:**
 - Created `BUSINESS-MEMORY.md` as a lightweight place for important clients, contacts, and recurring business context.
-- First client entry: Boar Blanket.
+- First client entries: Boar Blanket and HogEye Cameras.
+- Both accounts come through Casey Fuerst at Tic Tac Toe Marketing Agency, an important repeat-work source Jason has worked with for about 1 year.
 - Boar Blanket work includes SEO, content creation, blueprint/strategy, and 5 blog posts per month published to WordPress draft status around the 20th.
-- Key relationship: Casey Fuerst at Tic Tac Toe Marketing Agency is the main contact and an important repeat-work source; Jason has worked with her for about 1 year.
+- HogEye Cameras is a similar SEO/content account, but content goes to Google Docs for approval around the 20th instead of directly into WordPress.
+- Important commercial context: these two accounts together currently pay **$750 USD/month total** for **10 pieces**, and HogEye Cameras has a major approval bottleneck that can delay approvals for months.

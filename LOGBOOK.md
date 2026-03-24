@@ -31,4 +31,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-24 13:16 CDT | Create lightweight business memory and add first client entry | MEMORY.md, TASKS.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added Boar Blanket as Client 1 with Casey Fuerst / Tic Tac Toe Marketing Agency as the primary repeat-work contact and captured monthly WordPress draft publishing workflow. |
 
+| 2026-03-24 13:19 CDT | Add HogEye Cameras and pricing/bottleneck context to business memory | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | BUSINESS-MEMORY.md, MEMORY.md, LOGBOOK.md | ok | Added HogEye Cameras as Client 2, captured Casey/Tic Tac Toe agency relationship, Google Doc approval workflow, months-long approval bottleneck, and combined pricing context of $750/month for 10 pieces across both accounts. |
+
 _(Your agent adds new rows below as tasks are completed.)_
