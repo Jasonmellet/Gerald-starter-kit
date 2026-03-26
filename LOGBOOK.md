@@ -47,4 +47,8 @@ After file tasks, append one line in this format.
 
 | 2026-03-26 07:05 CDT | Light maintenance + self-improvement pass | TASKS.md, LOGBOOK.md, AGENTS.md, MEMORY.md, SOUL.md, IDENTITY.md, USER.md, HEARTBEAT.md | memory/2026-03-26.md, MEMORY.md, LOGBOOK.md | ok | Reviewed workspace consistency, restarted daily memory capture, and recorded the maintenance lesson that memory/log hygiene should not lapse.
 
+| 2026-03-26 07:24 CDT | Transcribe and analyze YouTube video "Every OpenClaw Concept Explained for Normal People" | sources/Every-OpenClaw-Concept-Explained-for-Normal-People_tFCgmeOWlA8_metadata.json, sources/Every-OpenClaw-Concept-Explained-for-Normal-People_tFCgmeOWlA8_transcript.txt, templates/youtube-analysis-template.md | outputs/Every-OpenClaw-Concept-Explained-for-Normal-People_tFCgmeOWlA8-analysis.md, LOGBOOK.md | ok | Focused analysis on agentic loops, memory, heartbeat, skills, and the operating lesson that Gerald should complete loops rather than stop at reply-shaped output.
+
+| 2026-03-26 07:33 CDT | Upgrade Gerald operating rules from agent-loop lesson | AGENTS.md, memory/2026-03-26.md, LOGBOOK.md | AGENTS.md, memory/2026-03-26.md, LOGBOOK.md | ok | Added an explicit default Gerald loop for non-trivial work: read, plan, act, verify, log, and preserve durable lessons.
+
 _(Your agent adds new rows below as tasks are completed.)_
