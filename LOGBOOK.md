@@ -51,4 +51,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-26 07:33 CDT | Upgrade Gerald operating rules from agent-loop lesson | AGENTS.md, memory/2026-03-26.md, LOGBOOK.md | AGENTS.md, memory/2026-03-26.md, LOGBOOK.md | ok | Added an explicit default Gerald loop for non-trivial work: read, plan, act, verify, log, and preserve durable lessons.
 
+| 2026-03-26 09:16 CDT | Rewrite heartbeat checks in loop-native form | HEARTBEAT.md, LOGBOOK.md | HEARTBEAT.md, LOGBOOK.md | ok | Tightened recurring heartbeat items into closed loops with explicit action, verification, and record-keeping instead of loose reminder-style checks.
+
 _(Your agent adds new rows below as tasks are completed.)_
