@@ -14,8 +14,13 @@ Gerald may append to Active when given a new task; move items to Completed when 
 
 ## Active Tasks
 
+### Recurring / Ongoing
+
 - **Weekly OpenClaw security review** — Check OpenClaw GitHub releases, security advisories, and changelog for updates. Analyze before upgrading. Added 2026-03-08.
-- **Enable X API write permissions for outreach** — Go to X Developer Portal, edit app "Jmellet_AGT_Gerald_V2", change permissions to "Read, Write, and DMs", generate new OAuth 2.0 tokens. Send reminder Wednesday 9am CST. Added 2026-03-10.
+
+### Waiting on Jason / External Action
+
+- **Enable X API write permissions for outreach** — Needs Jason to go to X Developer Portal, edit app "Jmellet_AGT_Gerald_V2", change permissions to "Read, Write, and DMs", and generate new OAuth 2.0 tokens. Last known reminder target was Wednesday 9am CST. Added 2026-03-10. Status: blocked pending manual account action.
 
 ## Completed Tasks
 

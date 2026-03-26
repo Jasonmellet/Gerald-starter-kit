@@ -53,4 +53,6 @@ After file tasks, append one line in this format.
 
 | 2026-03-26 09:16 CDT | Rewrite heartbeat checks in loop-native form | HEARTBEAT.md, LOGBOOK.md | HEARTBEAT.md, LOGBOOK.md | ok | Tightened recurring heartbeat items into closed loops with explicit action, verification, and record-keeping instead of loose reminder-style checks.
 
+| 2026-03-26 09:21 CDT | Restructure TASKS.md for loop-based task handling | TASKS.md, LOGBOOK.md | TASKS.md, LOGBOOK.md | ok | Split active work into recurring vs waiting-on-Jason buckets and marked the X API permissions task as blocked pending manual action instead of leaving it ambiguously active.
+
 _(Your agent adds new rows below as tasks are completed.)_
