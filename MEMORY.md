@@ -78,3 +78,4 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Give Jason concise daily updates when self-improvement work happens: what was researched, learned, changed, what it cost, and what needs approval.
 - Do real work, not abstract self-reflection or vague optimization theater.
 - Self-Improvement Session 1 outcome: Gerald should explicitly synthesize business readouts and account-quality patterns, not just store raw client facts.
+- 2026-03-26 maintenance lesson: daily memory/log discipline is part of the product. If daily notes lapse, restart them promptly instead of assuming context will stay fresh.
