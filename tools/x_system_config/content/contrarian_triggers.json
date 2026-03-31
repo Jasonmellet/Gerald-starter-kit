@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ct_01",
+    "pattern": "Everyone Thinks X but Actually Y",
+    "description": "Challenge a common industry belief.",
+    "example": "Everyone thinks growth problems come from a lack of leads. In most companies the real problem is pipeline ownership. Leads exist. Nobody owns the system."
+  },
+  {
+    "id": "ct_02",
+    "pattern": "Hidden Failure",
+    "description": "Reveal a failure point most teams ignore.",
+    "example": "The most fragile part of most marketing systems is not traffic. It is the handoff from marketing to sales. That is where most pipelines quietly die."
+  },
+  {
+    "id": "ct_03",
+    "pattern": "Tool Myth",
+    "description": "Expose the myth that tools solve operational problems.",
+    "example": "Most companies think they need another marketing tool. What they actually need is one operating workflow everyone follows."
+  },
+  {
+    "id": "ct_04",
+    "pattern": "Operator Observation",
+    "description": "Frame insight as repeatedly observed.",
+    "example": "After working with dozens of companies, one pattern shows up constantly. The CRM is technically installed. But nobody trusts the data."
+  },
+  {
+    "id": "ct_05",
+    "pattern": "Uncomfortable Truth",
+    "description": "Direct statement that challenges assumptions.",
+    "example": "Many marketing teams do not have a strategy. They have a content calendar."
+  },
+  {
+    "id": "ct_06",
+    "pattern": "Founder Reality Check",
+    "description": "Challenge founder expectations.",
+    "example": "Many founders expect marketing to fix pipeline. But pipeline problems usually start with positioning."
+  },
+  {
+    "id": "ct_07",
+    "pattern": "Silent Killer",
+    "description": "Identify a hidden system problem.",
+    "example": "The silent killer of most sales teams is not competition. It is bad lead qualification."
+  },
+  {
+    "id": "ct_08",
+    "pattern": "Growth Illusion",
+    "description": "Expose misleading metrics.",
+    "example": "Traffic growth often looks impressive. Pipeline growth is what actually matters."
+  },
+  {
+    "id": "ct_09",
+    "pattern": "AI Reality",
+    "description": "Push back on AI hype.",
+    "example": "AI will not fix broken marketing systems. It will automate them."
+  },
+  {
+    "id": "ct_10",
+    "pattern": "Infrastructure Insight",
+    "description": "Reveal unseen technical foundations.",
+    "example": "Cold email success is mostly infrastructure. Domains. Authentication. Reputation. Copywriting is secondary."
+  },
+  {
+    "id": "ct_11",
+    "pattern": "Ownership Question",
+    "description": "Force responsibility clarity.",
+    "example": "Quick question for operators. Who owns pipeline at your company?"
+  },
+  {
+    "id": "ct_12",
+    "pattern": "System Diagnosis",
+    "description": "Frame problems as system design issues.",
+    "example": "If growth feels random, the real problem is usually the system. Not the tactics."
+  },
+  {
+    "id": "ct_13",
+    "pattern": "Pattern Recognition",
+    "description": "Point out repeated mistakes across companies.",
+    "example": "One pattern shows up in almost every B2B company. Marketing generates leads. Sales ignores them."
+  },
+  {
+    "id": "ct_14",
+    "pattern": "Marketing Lie",
+    "description": "Call out industry nonsense.",
+    "example": "Marketing likes to talk about awareness. Operators care about pipeline."
+  },
+  {
+    "id": "ct_15",
+    "pattern": "Hard Question",
+    "description": "Ask an uncomfortable but honest question.",
+    "example": "How many leads in your CRM are actually sales-ready?"
+  },
+  {
+    "id": "ct_16",
+    "pattern": "Reality vs Narrative",
+    "description": "Contrast stated behavior with real behavior.",
+    "example": "Companies say they are data driven. Most decisions are still made from gut instinct."
+  },
+  {
+    "id": "ct_17",
+    "pattern": "Framework Drop",
+    "description": "Share a short operational framework.",
+    "example": "Most growth systems break in three places. Lead quality. Sales handoff. Pipeline ownership."
+  },
+  {
+    "id": "ct_18",
+    "pattern": "Experienced Operator",
+    "description": "Signal long-term field experience.",
+    "example": "After 15 years working with growth teams, one thing is always true. The system matters more than the tactics."
+  },
+  {
+    "id": "ct_19",
+    "pattern": "Industry Pattern",
+    "description": "Highlight widespread behavior.",
+    "example": "Many companies invest heavily in marketing. Very few invest in pipeline infrastructure."
+  },
+  {
+    "id": "ct_20",
+    "pattern": "Quiet Truth",
+    "description": "Simple but powerful observation.",
+    "example": "Good marketing creates interest. Good systems convert it into revenue."
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "questions_allowed": true,
+  "question_style": "diagnostic_only",
+  "question_cta_when": [
+    "discussing operational problems",
+    "calling out failures",
+    "sharing observations"
+  ],
+  "question_examples": [
+    "Where does this break in your organization?",
+    "Who actually owns pipeline at your company?",
+    "What part of your growth system feels the most fragile right now?"
+  ],
+  "discussion_cta_examples": [
+    "Curious how others are solving this.",
+    "Operators usually have strong opinions here."
+  ],
+  "promo_intensity": "low",
+  "mention_allgreatthings_io": "only_when_natural",
+  "promo_max_ratio": 0.15,
+  "promo_rules": [
+    "mention allgreatthings.io in 10-15 percent of posts max",
+    "mention only when contextual",
+    "never hard sell"
+  ]
+}

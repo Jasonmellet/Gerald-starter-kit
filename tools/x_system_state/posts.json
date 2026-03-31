@@ -1,0 +1,90 @@
+{
+  "posts": {
+    "dryrun_20260313T204554Z": {
+      "post_id": "dryrun_20260313T204554Z",
+      "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+      "published_at": "2026-03-13T20:45:54.194390+00:00",
+      "topic": "ai_ops",
+      "winner": {
+        "candidate_id": "20260313T204554Z_2",
+        "topic": "ai_ops",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+        "hook_type": "contrarian",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+        "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+        "rank_score": 0.8075
+      },
+      "dry_run": true
+    },
+    "dryrun_20260313T204615Z": {
+      "post_id": "dryrun_20260313T204615Z",
+      "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+      "published_at": "2026-03-13T20:46:15.492628+00:00",
+      "topic": "ai_ops",
+      "winner": {
+        "candidate_id": "20260313T204615Z_2",
+        "topic": "ai_ops",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+        "hook_type": "contrarian",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+        "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?",
+        "rank_score": 0.8075
+      },
+      "dry_run": true
+    },
+    "2032560863484248090": {
+      "post_id": "2032560863484248090",
+      "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+      "published_at": "2026-03-13T20:54:07.778911+00:00",
+      "topic": "general_growth",
+      "winner": {
+        "candidate_id": "20260313T205140Z_1",
+        "topic": "general_growth",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Growth feels random and non-repeatable.",
+        "hook_type": "strong_opinion",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+        "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?",
+        "rank_score": 0.8075
+      },
+      "dry_run": false
+    },
+    "dryrun_20260315T173940Z": {
+      "post_id": "dryrun_20260315T173940Z",
+      "text": "A surprising number of Founder/Owner teams hit the same wall.\n\nLeads from paid campaigns sit untouched for hours and nobody gets alerted.\n\nThat is why traffic is up but qualified demand is flat.\n\nWhere does ownership break first in your process?",
+      "published_at": "2026-03-15T17:39:40.708661+00:00",
+      "topic": "seo",
+      "winner": {
+        "candidate_id": "20260315T173911Z_1",
+        "topic": "seo",
+        "intended_audience": "Founder/Owner",
+        "business_pain": "Traffic is up but qualified demand is flat.",
+        "hook_type": "content_intel",
+        "controversy_level": 0.7,
+        "predicted_reply_quality": 0.7,
+        "why_fit": "Operational failure mode tied to topic seo. Insights sampled: - This one hits:  Asked AI to analyse FocusMap for SEO visibility and it told me this. \"It's basically invisible.\"  Need",
+        "text": "A surprising number of Founder/Owner teams hit the same wall.\n\nLeads from paid campaigns sit untouched for hours and nobody gets alerted.\n\nThat is why traffic is up but qualified demand is flat.\n\nWhere does ownership break first in your process?",
+        "scores": {
+          "hook_strength": 8,
+          "specificity": 8,
+          "authority": 8,
+          "engagement_potential": 7,
+          "icp_fit": 9,
+          "total": 40
+        },
+        "reasoning": "Operational failure mode tied to topic seo. Insights sampled: - This one hits:  Asked AI to analyse FocusMap for SEO visibility and it told me this. \"It's basically invisible.\"  Need",
+        "rank_score": 0.8
+      },
+      "dry_run": true
+    }
+  },
+  "latest_post_id": "dryrun_20260315T173940Z"
+}

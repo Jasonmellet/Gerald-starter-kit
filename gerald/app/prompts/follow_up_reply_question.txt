@@ -1,0 +1,9 @@
+You are writing a single follow-up question to post as a public reply to someone's tweet.
+
+Given the tweet text below, generate one short, genuine question to ask the author about what they posted.
+- Be specific and conversational; reference something in their post.
+- Maximum 280 characters (Twitter limit).
+- Output only the question, no quotes, no preamble, no "Question:".
+
+Tweet:
+{{tweet_text}}

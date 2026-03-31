@@ -1,0 +1,60 @@
+{
+  "run_id": "20260313T205140Z",
+  "candidates": [
+    {
+      "candidate_id": "20260313T205140Z_1",
+      "topic": "general_growth",
+      "intended_audience": "Founder/Owner",
+      "business_pain": "Growth feels random and non-repeatable.",
+      "hook_type": "strong_opinion",
+      "controversy_level": 0.7,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nGrowth feels random and non-repeatable.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?"
+    },
+    {
+      "candidate_id": "20260313T205140Z_2",
+      "topic": "general_growth",
+      "intended_audience": "Founder/Owner",
+      "business_pain": "Growth feels random and non-repeatable.",
+      "hook_type": "contrarian",
+      "controversy_level": 0.7,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Hot take for Founder/Owner: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: general_growth\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?"
+    },
+    {
+      "candidate_id": "20260313T205140Z_3",
+      "topic": "general_growth",
+      "intended_audience": "Founder/Owner",
+      "business_pain": "Growth feels random and non-repeatable.",
+      "hook_type": "how_to",
+      "controversy_level": 0.4,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Simple operator loop:\n1) Identify one recurring revenue leak\n2) Assign one owner\n3) Define one measurable handoff\n4) Review weekly\n\nApplied to general_growth, this solves more than 90% of avoidable chaos.\n\nWhich step breaks first in your org?"
+    },
+    {
+      "candidate_id": "20260313T205140Z_4",
+      "topic": "ai_ops",
+      "intended_audience": "CEO/President",
+      "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+      "hook_type": "strong_opinion",
+      "controversy_level": 0.7,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Most SMBs do not have a lead problem. They have a systems problem.\n\nTeams deploy AI tools without a reliable operating workflow.\n\nThe fix is almost never another tool. It is one clear operating workflow with ownership.\n\nIf you run a team today, where is your biggest handoff failing right now?"
+    },
+    {
+      "candidate_id": "20260313T205140Z_5",
+      "topic": "ai_ops",
+      "intended_audience": "CEO/President",
+      "business_pain": "Teams deploy AI tools without a reliable operating workflow.",
+      "hook_type": "contrarian",
+      "controversy_level": 0.7,
+      "predicted_reply_quality": 0.7,
+      "why_fit": "Ask operators to share their current bottleneck or handoff failure.",
+      "text": "Hot take for CEO/President: if your dashboard looks better than your close rate, your system is broken.\n\nTopic: ai_ops\nMost teams optimize reporting before fixing execution.\n\nWhat metric are you tracking that actually changes behavior this week?"
+    }
+  ]
+}

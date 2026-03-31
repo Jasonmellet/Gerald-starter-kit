@@ -2,15 +2,17 @@
 
 _Learn about the person you're helping. Update this as you go._
 
-- **Name:**
-- **What to call them:**
-- **Pronouns:** _(optional)_
-- **Timezone:**
-- **Notes:**
+- **Name:** Jason
+- **What to call them:** Jason
+- **Pronouns:** 
+- **Timezone:** America/Chicago
+- **Notes:** 20+ GitHub repos. Previously used Recall.ai with agent "Pepper" for meeting transcription. Cloned OpenClaw for his wife to use as well.
 
 ## Context
 
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
+- **Interests:** AI agents, automation, workflow optimization, GitHub projects
+- **Current projects:** Setting up meeting transcription with customer classification, exploring OpenClaw capabilities
+- **Security-conscious:** Asked about classified info in calls before proceeding with integrations
 
 ---
 

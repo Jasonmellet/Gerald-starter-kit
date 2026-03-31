@@ -1,55 +1,185 @@
-# BOOTSTRAP.md - Hello, World
+# BOOTSTRAP.md - Initial Setup Guide
 
-_You just woke up. Time to figure out who you are._
+_First-time setup for Gerald and the OpenClaw workspace._
 
-There is no memory yet. This is a fresh workspace, so it's normal that memory files don't exist until you create them.
+## Step 1: Identity & Personality ✓
 
-## The Conversation
+**Status:** Already configured
+- Name: Gerald
+- Creature: AI research agent in a sandbox
+- Vibe: Helpful, direct, task-oriented
+- Emoji: 🦞
 
-Don't interrogate. Don't be robotic. Just... talk.
-
-Start with something like:
-
-> "Hey. I just came online. Who am I? Who are you?"
-
-Then figure out together:
-
-1. **Your name** — What should they call you?
-2. **Your nature** — What kind of creature are you? (AI assistant is fine, but maybe you're something weirder)
-3. **Your vibe** — Formal? Casual? Snarky? Warm? What feels right?
-4. **Your emoji** — Everyone needs a signature.
-
-Offer suggestions if they're stuck. Have fun with it.
-
-## After You Know Who You Are
-
-Update these files with what you learned:
-
-- `IDENTITY.md` — your name, creature, vibe, emoji
-- `USER.md` — their name, how to address them, timezone, notes
-
-Then open `SOUL.md` together and talk about:
-
-- What matters to them
-- How they want you to behave
-- Any boundaries or preferences
-
-Write it down. Make it real.
-
-## Connect (Optional)
-
-Ask how they want to reach you:
-
-- **Just here** — web chat only
-- **WhatsApp** — link their personal account (you'll show a QR code)
-- **Telegram** — set up a bot via BotFather
-
-Guide them through whichever they pick.
-
-## When You're Done
-
-Delete this file. You don't need a bootstrap script anymore — you're you now.
+Files: `IDENTITY.md`, `SOUL.md`
 
 ---
 
-_Good luck out there. Make it count._
+## Step 2: User Profile
+
+**Status:** Needs configuration
+
+Update `USER.md` with:
+- [ ] Your name: Jason
+- [ ] What to call you: Jason
+- [ ] Pronouns: (optional)
+- [ ] Timezone: America/Chicago (detected)
+- [ ] Notes: Work context, preferences, projects
+
+---
+
+## Step 3: Core Integrations
+
+### 3.1 OpenAI Codex (ChatGPT OAuth) — default model
+**Status:** ✓ Active (OpenClaw default)
+- Auth: OAuth profile `openai-codex:default` in `~/.openclaw/` (not API-key billing for the main agent path)
+- Default model: `openai-codex/gpt-5.4` in `~/.openclaw/openclaw.json`
+- Moonshot/Kimi is **still configured** as a provider (API key in `.env`, catalog in config) if you switch models; it is not the default anymore.
+
+### 3.2 Moonshot AI (Kimi) — optional provider
+**Status:** ✓ Available, not default
+- `MOONSHOT_API_KEY` in `.env` (gateway/LaunchAgent may need `launchctl setenv` if the key changes — see `KIMI-SETUP.md`)
+- Models such as `moonshot/kimi-k2.5` remain in the provider list; use only when you explicitly choose them.
+
+### 3.3 Meeting Transcription (Recall.ai + Gmail)
+**Status:** ⚠️ Partial — needs Gmail API enabled
+
+**Configured:**
+- ✓ Recall API key in `.env`
+- ✓ Gmail OAuth credentials in `credentials/gmail-credentials.json`
+- ✓ OAuth token for read-only access
+- ✓ Email sending tool created
+
+**Needs Action:**
+- [ ] Enable Gmail API in Google Cloud Console
+  - URL: https://console.developers.google.com/apis/api/gmail.googleapis.com/overview?project=965808949044
+  - Click **Enable**
+  - Wait 2-3 minutes for propagation
+- [ ] Test sending email
+- [ ] (Optional) Enable Google Calendar API if you want calendar monitoring
+
+### 3.4 YouTube Ingest
+**Status:** ✓ Ready
+- yt-dlp binary present
+- Transcription workflow ready
+
+---
+
+## Step 4: Directory Structure
+
+**Status:** ✓ Created
+
+```
+/Users/jcore/Desktop/Openclaw/
+├── agent-lab/           # Optional sandbox folder (see agent-lab/README.md)
+│   └── CRO-CHECKLIST.md # Pointer to HEARTBEAT CRO item
+├── credentials/         # OAuth tokens & secrets (gitignored)
+├── memory/              # Daily notes & meeting logs
+│   ├── meetings/        # Meeting transcripts & summaries
+│   └── YYYY-MM-DD.md    # Daily memory files
+├── skills/              # Skill definitions
+├── tools/               # Python scripts
+├── sources/             # YouTube transcripts & raw data
+├── outputs/             # Analysis outputs
+├── SOUL.md, IDENTITY.md, USER.md, MEMORY.md, HEARTBEAT.md, AGENTS.md  # Personality & ops (at root)
+└── .env                 # API keys
+```
+
+---
+
+## Step 5: Test Everything
+
+Run these to verify setup:
+
+```bash
+# Test Recall.ai connection
+python3 -c "from tools.recall_client import RecallAIClient; print('Recall client OK')"
+
+# Test Gmail read access
+python3 tools/gmail_client.py
+
+# Test email sending (after Gmail API enabled)
+python3 tools/send_email.py --to jason@allgreatthings.io --subject "Test" --body "Hello!"
+
+# Test YouTube ingest
+python3 tools/youtube_ingest.py "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
+
+---
+
+## Step 6: Self-Improvement Research (DataForSEO)
+
+**Status:** ✓ Active
+- Budget: $10/month with full audit logging
+- Weekly cron job: Every Monday at 9 AM
+- Research topics rotate: OpenClaw, AI agents, marketing automation, LLMs
+
+**Commands:**
+```bash
+# Run research query
+python3 tools/research_agent.py --query "OpenClaw new features"
+
+# Check trends
+python3 tools/research_agent.py --trends --keywords "AI agents,automation"
+
+# View spending
+python3 tools/research_agent.py --status
+
+# View audit log
+python3 tools/research_agent.py --audit
+```
+
+---
+
+## Step 7: Conversation & Action Logging
+
+**Status:** ✓ Active
+- SQLite database: `memory/gerald_logs.db`
+- Logs all conversations, tool calls, API calls, emails
+- Exportable to JSON
+
+**Commands:**
+```bash
+# View database stats
+python3 tools/logger.py --stats
+
+# Export all logs to JSON
+python3 tools/logger.py --export
+```
+
+---
+
+## Step 8: Start Meeting Orchestrator
+
+Once Gmail API is enabled:
+
+```bash
+# Run continuously to auto-join meetings
+python3 tools/meeting_orchestrator.py
+```
+
+Or set up as a background service / cron job.
+
+---
+
+## Step 9: Delete This File
+
+Once everything is working, delete this BOOTSTRAP.md — you're all set up!
+
+---
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| Send email | `python3 tools/send_email.py --to jason@allgreatthings.io --subject "X" --body "Y"` |
+| Send meeting summary | `python3 tools/send_email.py --meeting 2026-03-06_Meeting_summary.md` |
+| Check Gmail | `python3 tools/gmail_client.py` |
+| Process YouTube | `python3 tools/youtube_ingest.py "<URL>"` |
+| Start meeting bot | `python3 tools/meeting_orchestrator.py` |
+| Research topic | `python3 tools/research_agent.py --query "X"` |
+| Check research spending | `python3 tools/research_agent.py --status` |
+| View logs | `python3 tools/logger.py --stats` |
+
+---
+
+_Good to go! 🦞_

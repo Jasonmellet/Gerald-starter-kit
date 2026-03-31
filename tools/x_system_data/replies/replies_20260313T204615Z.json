@@ -1,0 +1,8 @@
+{
+  "run_id": "20260313T204615Z",
+  "post_id": "dryrun_20260313T204615Z",
+  "dry_run": true,
+  "poll_interval_seconds": 600,
+  "max_window_seconds": 86400,
+  "replies": []
+}

@@ -1,0 +1,34 @@
+{
+  "hook_strength": 1.0,
+  "specificity": 1.2,
+  "authority": 1.1,
+  "engagement_potential": 1.0,
+  "icp_fit": 1.3,
+  "ranking_priorities": [
+    {
+      "name": "icp_relevance",
+      "weight": 30,
+      "description": "Founders, revenue leaders, RevOps leaders, growth operators, and B2B marketing leaders."
+    },
+    {
+      "name": "operator_insight",
+      "weight": 25,
+      "description": "Reveals an operational truth and sounds like an experienced operator."
+    },
+    {
+      "name": "specificity",
+      "weight": 20,
+      "description": "Specific operational problems beat generic advice."
+    },
+    {
+      "name": "reply_potential",
+      "weight": 15,
+      "description": "Invites disagreement, discussion, or shared experience."
+    },
+    {
+      "name": "authority_signal",
+      "weight": 10,
+      "description": "Builds credibility through systems thinking and real-world insight."
+    }
+  ]
+}
