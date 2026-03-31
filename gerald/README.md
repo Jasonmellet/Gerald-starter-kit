@@ -106,14 +106,17 @@ python3 -m app.cli.main run-autonomous
 # or from repo root: ./run run-autonomous
 ```
 
-- **Automation (run without opening a terminal)** – Gerald doesn’t have a built-in daemon. To run the full pipeline on a schedule (e.g. daily), use **cron** or **launchd** and point them at the script:
+- **Automation (run without opening a terminal)** – From the **OpenClaw repo root**:
 
 ```bash
-# Example: run daily at 9:00 AM, log to outputs/cron.log
-0 9 * * * /path/to/gerald/scripts/run-autonomous-daily.sh >> /path/to/gerald/outputs/cron.log 2>&1
+bash tools/install_gerald_autonomous_launchd.sh
 ```
 
-Edit `scripts/run-autonomous-daily.sh` so the path matches your machine. Ensure `.env` is in the `gerald` directory so the script picks up your keys and send-mode settings.
+Installs **`com.gerald.run-autonomous`** (Mon/Wed/Fri **09:15**, machine local time). Logs: `gerald/outputs/launchd-autonomous.log`. Also runs as part of `tools/turn_on_team.sh` step 5. If the repo lives under **Desktop**, the installer syncs to **`~/Openclaw`** first (same pattern as meeting orchestrator).
+
+Alternatively, use **cron** with `gerald/scripts/run-autonomous-daily.sh` and your own schedule.
+
+**Environment:** `gerald` loads the **workspace root** `.env` (`Openclaw/.env`), not only `gerald/.env`. Set `OUTREACH_SEND_MODE`, `ALLOW_LIVE_SEND`, and API keys there.
 
 ### Architecture overview
 
@@ -131,7 +134,8 @@ Edit `scripts/run-autonomous-daily.sh` so the path matches your machine. Ensure 
 
 ### Search queries and model routing
 
-- Discovery queries are configured via `Settings.discovery_queries` in `config.py` and can be overridden via env if desired.
+- **Primary:** `gerald/config/discovery_queries.json` — if present, its `queries` array **replaces** the built-in defaults (aligned to `BUSINESS-MEMORY.md` ICP).
+- **Fallback:** `Settings.discovery_queries` defaults in `app/config.py`.
 - Anthropic model names are configured in `.env` with:
   - `ANTHROPIC_CHEAP_MODEL`
   - `ANTHROPIC_STRONG_MODEL`

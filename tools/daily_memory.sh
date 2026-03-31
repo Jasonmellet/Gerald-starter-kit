@@ -2,7 +2,7 @@
 # Daily Memory Management
 # Runs at end of day to create memory files and update long-term memory
 
-REPO_DIR="/Users/jcore/Desktop/Openclaw"
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_FILE="$REPO_DIR/memory/memory-cron.log"
 DATE=$(date +%Y-%m-%d)
 

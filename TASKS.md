@@ -8,7 +8,7 @@ Gerald may append to Active when given a new task; move items to Completed when 
 
 **When Gerald creates a cron job, LaunchAgent, or script that needs to be run once to activate, he adds it here.** You run the command; then tell him it’s done so he can remove or check it off.
 
-- _(None right now. After you run `turn_on_team.sh`, this stays empty unless Gerald adds a new automation.)_
+- _(None.)_
 
 ---
 
@@ -20,7 +20,7 @@ Gerald may append to Active when given a new task; move items to Completed when 
 
 ### Waiting on Jason / External Action
 
-- **Enable X API write permissions for outreach** — Needs Jason to go to X Developer Portal, edit app "Jmellet_AGT_Gerald_V2", change permissions to "Read, Write, and DMs", and generate new OAuth 2.0 tokens. Last known reminder target was Wednesday 9am CST. Added 2026-03-10. Status: blocked pending manual account action.
+- **X outreach: permissions + DM reality check** — Gerald has sent some DMs successfully; many failures are **403 “no permission to DM”** (recipient allows DMs only from followers / mutuals, or account settings). **Still verify** in X Developer Portal that app **Jmellet_AGT_Gerald_V2** has **Read + Write + DM** as intended, and OAuth **user-context** tokens in `.env` match that app. Prefer **public replies** or **follow-first** where cold DM is blocked. Playbook: `.cursor/skills/x-oauth-and-permissions-playbook/SKILL.md`. Added 2026-03-10; wording updated 2026-03-31 to match observed behavior.
 
 ## Completed Tasks
 

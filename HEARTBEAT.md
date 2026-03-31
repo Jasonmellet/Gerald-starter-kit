@@ -18,6 +18,7 @@ Keep heartbeat work small and useful.
 - **Daily Digest Email (Daily 9am)** — Run `python3 tools/daily_digest.py` to send the email summary of X monitor findings. Verify success or report failure; do not assume a send worked just because the command ran. Data collection happens at 8:30am.
 - **Security Review (Weekly Monday 9am)** — Run `python3 tools/security_review.py --email`, inspect whether it found anything noteworthy, verify the email/report step succeeded, and surface important findings.
 - **CRO Skill Status (every 2 days)** — Read `skills/fractional-cro/TODO.md`; check Upwork and X/Twitter API status (saved credentials / ask Jason if account validated). If any API is approved, test connection, update scraper, notify Jason, remove it from pending, and update TODO state. If nothing is approved, still update the last-checked date/state so the loop stays current. If nothing new: "CRO Skill: No API approvals yet. Will check again in 2 days."
+- **Weekly growth + improvement (Mondays)** — Cron runs `tools/x_posts_window_report.py --days 7` at **10:00** (with `scheduler.py`). Read the newest `outputs/x_posts_last_7d_*.md`, add **one line** to `memory/self-improvement-ledger.md` (what changed / what to try), fill qualitative rows in `docs/x-weekly-content-review.md`, and **update the “Weekly growth retro” table in `MEMORY.md`** (one X change + one Gerald change, or `none`). ICP + query alignment: `BUSINESS-MEMORY.md` and `gerald/config/discovery_queries.json`.
 
 ## Quiet rules
 

@@ -46,7 +46,15 @@ SCHEDULE = {
         'tasks': [
             ('Security Review', 'tools/security_review.py', ['--email']),
         ]
-    }
+    },
+    # Monday 10am (weekly) — quantitative input for x-weekly-content-review + self-improvement ledger
+    'weekly_monday_10am': {
+        'day': 0,
+        'time': (10, 0),
+        'tasks': [
+            ('X posts 7-day window report', 'tools/x_posts_window_report.py', ['--days', '7']),
+        ]
+    },
 }
 
 

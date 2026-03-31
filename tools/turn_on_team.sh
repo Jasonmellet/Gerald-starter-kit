@@ -6,43 +6,28 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO"
 mkdir -p logs
 
-echo "=== 1. Installing cron (scheduler: 8:30, 9am, 6pm; Monday 9am security) ==="
-crontab -l > /tmp/oc_crontab 2>/dev/null || true
-if ! grep -q "OpenClaw Daily" /tmp/oc_crontab 2>/dev/null; then
-  cat >> /tmp/oc_crontab << EOF
-
-# OpenClaw Daily Schedule
-30 8 * * * cd $REPO && /usr/bin/python3 tools/scheduler.py >> logs/scheduler.log 2>&1
-0 9 * * * cd $REPO && /usr/bin/python3 tools/scheduler.py >> logs/scheduler.log 2>&1
-0 18 * * * cd $REPO && /usr/bin/python3 tools/scheduler.py >> logs/scheduler.log 2>&1
-EOF
-  crontab /tmp/oc_crontab
-  echo "Cron installed."
-else
-  echo "Cron already has OpenClaw entries."
+# Cron must cd to a path launchd/macOS can read. Desktop copies break some jobs; mirror to ~/Openclaw.
+CRON_ROOT="$REPO"
+if [[ "$REPO" == *"Desktop"* ]]; then
+  CRON_ROOT="$HOME/Openclaw"
+  mkdir -p "$CRON_ROOT"
+  echo "=== 0. Sync Desktop repo → $CRON_ROOT (cron + launchd runtime) ==="
+  rsync -a "$REPO/" "$CRON_ROOT/"
+  echo "Sync done."
+  echo ""
 fi
 
-echo ""
-echo "=== 2. Adding CRO lead feed (daily 7am) ==="
-if ! crontab -l 2>/dev/null | grep -q "x_lead_feed.py"; then
-  (crontab -l 2>/dev/null; echo "0 7 * * * cd $REPO && /usr/bin/python3 tools/x_lead_feed.py >> logs/x_lead_feed.log 2>&1") | crontab -
-  echo "Lead feed cron added."
-else
-  echo "Lead feed already in crontab."
-fi
+echo "=== 1. Cron (scheduler, digest, Mon X report, lead feed, meeting health) ==="
+# Logic lives in apply_openclaw_cron.sh (run same script in Terminal.app if crontab hangs from an IDE).
+bash "$REPO/tools/apply_openclaw_cron.sh"
 
 echo ""
-echo "=== 3. Adding meeting orchestrator health check (every 15 min) ==="
-if ! crontab -l 2>/dev/null | grep -q "meeting_orchestrator_health_check.py"; then
-  (crontab -l 2>/dev/null; echo "*/15 * * * * cd $REPO && /usr/bin/python3 tools/meeting_orchestrator_health_check.py >> logs/meeting_orchestrator_health.log 2>&1") | crontab -
-  echo "Meeting health-check cron added."
-else
-  echo "Meeting health-check already in crontab."
-fi
-
-echo ""
-echo "=== 4. Meeting orchestrator (LaunchAgent; if repo on Desktop, copies to ~/Openclaw) ==="
+echo "=== 2. Meeting orchestrator (LaunchAgent; if repo on Desktop, copies to ~/Openclaw) ==="
 "$REPO/tools/setup_gerald_meetings.sh"
+
+echo ""
+echo "=== 3. Gerald prospecting (run-autonomous Mon/Wed/Fri 09:15) ==="
+bash "$REPO/tools/install_gerald_autonomous_launchd.sh"
 
 echo ""
 echo "Done. Team is scheduled:"
@@ -53,5 +38,6 @@ echo "  - 9:00 Mon: Security review email"
 echo "  - 18:00 daily: X monitor"
 echo "  - Every 15 min: Meeting orchestrator health check (Telegram alert on repeated failures)"
 echo "  - Every 5 min: Meeting orchestrator (Gerald joins when invited)"
+echo "  - Mon/Wed/Fri 09:15: Gerald run-autonomous (discover→draft→send per .env; log: gerald/outputs/launchd-autonomous.log)"
 echo ""
-echo "Heartbeat (HEARTBEAT.md) runs only when something sends Gerald a heartbeat poll (e.g. OpenClaw/Kimi schedule)."
+echo "Heartbeat (HEARTBEAT.md) runs only when something sends Gerald a heartbeat poll (e.g. OpenClaw schedule)."

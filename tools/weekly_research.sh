@@ -3,7 +3,7 @@
 # Runs every Monday at 9 AM
 # Budget: $10/month (~$2.50/week)
 
-REPO_DIR="/Users/jcore/Desktop/Openclaw"
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_FILE="$REPO_DIR/memory/api-usage/cron.log"
 DATE=$(date +%Y-%m-%d)
 

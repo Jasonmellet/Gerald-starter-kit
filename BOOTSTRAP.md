@@ -29,12 +29,18 @@ Update `USER.md` with:
 
 ## Step 3: Core Integrations
 
-### 3.1 Moonshot AI (Already configured)
-**Status:** ✓ Active
-- API key in `.env`
-- Model: kimi-k2.5
+### 3.1 OpenAI Codex (ChatGPT OAuth) — default model
+**Status:** ✓ Active (OpenClaw default)
+- Auth: OAuth profile `openai-codex:default` in `~/.openclaw/` (not API-key billing for the main agent path)
+- Default model: `openai-codex/gpt-5.4` in `~/.openclaw/openclaw.json`
+- Moonshot/Kimi is **still configured** as a provider (API key in `.env`, catalog in config) if you switch models; it is not the default anymore.
 
-### 3.2 Meeting Transcription (Recall.ai + Gmail)
+### 3.2 Moonshot AI (Kimi) — optional provider
+**Status:** ✓ Available, not default
+- `MOONSHOT_API_KEY` in `.env` (gateway/LaunchAgent may need `launchctl setenv` if the key changes — see `KIMI-SETUP.md`)
+- Models such as `moonshot/kimi-k2.5` remain in the provider list; use only when you explicitly choose them.
+
+### 3.3 Meeting Transcription (Recall.ai + Gmail)
 **Status:** ⚠️ Partial — needs Gmail API enabled
 
 **Configured:**
@@ -51,7 +57,7 @@ Update `USER.md` with:
 - [ ] Test sending email
 - [ ] (Optional) Enable Google Calendar API if you want calendar monitoring
 
-### 3.3 YouTube Ingest
+### 3.4 YouTube Ingest
 **Status:** ✓ Ready
 - yt-dlp binary present
 - Transcription workflow ready

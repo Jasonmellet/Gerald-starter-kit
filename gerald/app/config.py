@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import json
 from functools import lru_cache
 from pathlib import Path
 from typing import List, Optional
 
 from dotenv import load_dotenv
-from pydantic import Field, HttpUrl
+from pydantic import Field, HttpUrl, model_validator
 from pydantic_settings import BaseSettings
 
 
@@ -92,6 +93,23 @@ class Settings(BaseSettings):
             "ai startup",
         ]
     )
+
+    @model_validator(mode="after")
+    def _overlay_discovery_queries_from_file(self) -> Settings:
+        """If gerald/config/discovery_queries.json exists, replace default queries."""
+        path = BASE_DIR / "config" / "discovery_queries.json"
+        if not path.is_file():
+            return self
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+            qs = raw.get("queries") if isinstance(raw, dict) else raw
+            if isinstance(qs, list):
+                cleaned = [str(q).strip() for q in qs if isinstance(q, str) and q.strip()]
+                if cleaned:
+                    self.discovery_queries = cleaned
+        except (OSError, ValueError, TypeError, json.JSONDecodeError):
+            pass
+        return self
 
     class Config:
         env_file = ENV_PATH

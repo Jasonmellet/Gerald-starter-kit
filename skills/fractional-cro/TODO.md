@@ -7,14 +7,14 @@
 - **V2 App ID**: 332eac90d878065f5d250e50aeeffc76
 - **Status**: Disabled by default, awaiting manual review
 - **Action needed**: Fill out business details on Upwork developer portal
-- **Last checked**: 2026-03-15
-- **Next check**: 2026-03-17
+- **Last checked**: 2026-03-28
+- **Next check**: 2026-03-30
 
 ### X/Twitter API
 - **Status**: Account needs validation first
 - **Action needed**: Jason verifying email + phone on X account
-- **Last checked**: 2026-03-15
-- **Next check**: 2026-03-17
+- **Last checked**: 2026-03-28
+- **Next check**: 2026-03-30
 
 ## Working Now
 - ✅ Reddit scraping (129 leads/day)

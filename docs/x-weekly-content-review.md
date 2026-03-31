@@ -4,6 +4,24 @@ Purpose: Build a weekly evidence base of what content performs, then feed those 
 
 Cadence: Every week (suggest Sunday evening or Monday morning).
 
+## Automated pull (API)
+
+From the repo root, fetch everything the account posted in the last N days (posts, replies, RTs), with `public_metrics`:
+
+```bash
+python3 tools/x_posts_window_report.py --days 7
+```
+
+- **Requires:** `X_BEARER_TOKEN` in `.env`, plus either `X_ACCOUNT_USERNAME`, or `X_ACCESS_TOKEN` in the form `<user_id>-...` (same as other X tools).
+- **Writes (under `outputs/`, gitignored):**
+  - `x_posts_last_7d_<timestamp>.json` — full API payload for spreadsheets or scripts
+  - `x_posts_last_7d_<timestamp>.md` — short Markdown summary: counts by type, pipeline-template hits, top 5 by likes (all vs originals-only)
+- **Options:** `--username HANDLE`, `--days 14`, `--no-md`, `--json-out PATH`, `--md-out PATH`
+
+Use the `.md` file as the quantitative half of the week; then fill in the qualitative sections below (why it worked, what to change). For turning learnings into config edits, follow `.cursor/skills/x-content-learning-loop/SKILL.md`.
+
+**Positioning alignment:** Re-read `BUSINESS-MEMORY.md` (ICP + win themes) before writing “pattern learnings” so X tweaks match who you’re trying to attract.
+
 ## Week Of: YYYY-MM-DD
 
 ### 1) Top Posts (up to 10)

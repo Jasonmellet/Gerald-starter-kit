@@ -79,3 +79,19 @@ Long-term memory for Gerald. Update when significant events or decisions occur.
 - Do real work, not abstract self-reflection or vague optimization theater.
 - Self-Improvement Session 1 outcome: Gerald should explicitly synthesize business readouts and account-quality patterns, not just store raw client facts.
 - 2026-03-26 maintenance lesson: daily memory/log discipline is part of the product. If daily notes lapse, restart them promptly instead of assuming context will stay fresh.
+
+## Weekly growth retro (rolling — update every Monday)
+
+**Rule:** After the **Monday ~10:00** `x_posts_window_report` run (and a quick glance at **Gerald** logs / `launchd-autonomous.log` if a run fired), replace the **Current week** block below. At most **one concrete change** per column (or write **none**). If you changed a file, name it. This block is the single source of truth for “what we actually tuned last week.”
+
+**Current week (edit in place):**
+
+| Field | Value |
+|--------|--------|
+| **Week of (ISO Monday)** | 2026-03-30 |
+| **X / content** (one change or `none`) | none (ops week: runtime sync + scheduling only) |
+| **Gerald / prospecting** (one change or `none`) | none (prior: `gerald/config/discovery_queries.json` + LaunchAgent; see LOGBOOK 2026-03-31) |
+| **Evidence** | `LOGBOOK.md` rows 2026-03-31; `~/Openclaw` rsync + `com.gerald.run-autonomous` + meeting orchestrator refreshed |
+| **Next week hypothesis** | `crontab -l` now includes scheduler + CSO/memory under `cd $HOME/Openclaw`; watch first Mon 10:00 `x_posts` report, Mon 9:00 `weekly_research.sh`, Mon/Wed/Fri Gerald log. |
+
+**Previous week (archive one line when you rotate):** _optional one-liner after rotation_

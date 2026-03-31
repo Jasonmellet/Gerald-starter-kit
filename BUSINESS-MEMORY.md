@@ -7,6 +7,22 @@ Purpose:
 - Keep this practical and compact
 - Store signal, not clutter
 
+## ICP — who we hunt on X (Gerald prospecting)
+
+**Ideal profile:** Founder-led or lean **B2B** teams (often seed–Series A or services firms) who are **stuck between marketing and revenue** — weak pipeline, unclear handoffs, first marketing hire, or need **fractional / senior GTM help** without a full-time CMO. They talk about **pipeline, attribution, outbound, RevOps, hiring a marketer**, not generic “AI hype.”
+
+**Not the core ICP:** Pure consumer apps, creator/influencer accounts, job-board spam, or accounts with no plausible budget for strategic GTM work.
+
+**Discovery queries** for this ICP live in `gerald/config/discovery_queries.json` (edit there; Gerald loads them on each run). Keep this section and that file in sync when you pivot positioning.
+
+## Win themes — X content + outreach voice
+
+Use these as the through-line for posts, replies, and DM angles (see also `tools/x_system_config/` and `docs/x-weekly-content-review.md`):
+
+1. **Systems over tools** — growth breaks at handoffs and ownership, not missing software.
+2. **Outbound + enrichment + workflow** — Jason’s leverage is custom sourcing, email/GTM systems, and execution, not commodity content volume.
+3. **Agency and fractional model** — speak to founders and small teams who need senior help without a full-time hire.
+
 ## Clients
 
 ### Client 1 — Boar Blanket

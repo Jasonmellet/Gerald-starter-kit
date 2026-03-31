@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 # Daily Security Summary Cron Job
 # Runs every day at 8 AM
 
-REPO_DIR="/Users/jcore/Desktop/Openclaw"
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 LOG_FILE="$REPO_DIR/memory/reports/cron-daily.log"
 DATE=$(date +%Y-%m-%d)
 

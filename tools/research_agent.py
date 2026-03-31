@@ -321,12 +321,15 @@ class DataForSEOClient:
         """Extract trend data from response."""
         trends = []
 
-        tasks = data.get("tasks", [])
+        tasks = data.get("tasks", []) or []
         for task in tasks:
-            for result in task.get("result", []):
+            results = task.get("result") or []
+            for result in results:
+                if not result:
+                    continue
                 keyword = result.get("keyword", "")
-                monthly_searches = result.get("monthly_searches", [])
-                search_volume = result.get("search_volume", 0)
+                monthly_searches = result.get("monthly_searches") or []
+                search_volume = result.get("search_volume", 0) or 0
 
                 trends.append({
                     "keyword": keyword,
@@ -395,11 +398,15 @@ def check_trends(keywords: List[str]):
     for trend in result["trends"]:
         print(f"\n🔍 {trend['keyword']}")
         print(f"   Monthly searches: {trend['search_volume']:,}")
-        if trend['monthly_data']:
-            recent = trend['monthly_data'][-3:]  # Last 3 months
+        monthly_data = trend.get('monthly_data') or []
+        if monthly_data:
+            recent = monthly_data[-3:]  # Last 3 months
             print(f"   Recent trend: ", end="")
             for month in recent:
-                print(f"{month['month']}/{month['year']}: {month['search_volume']:,}  ", end="")
+                month_num = month.get('month', '?')
+                year = month.get('year', '?')
+                volume = month.get('search_volume', 0)
+                print(f"{month_num}/{year}: {volume:,}  ", end="")
             print()
 
 

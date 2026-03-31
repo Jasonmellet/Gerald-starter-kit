@@ -1,5 +1,7 @@
 # Kimi (Moonshot) setup
 
+**Workspace default (OpenClaw):** This repo uses **`openai-codex/gpt-5.4`** (ChatGPT / Codex OAuth) as the primary agent model. The steps below keep **Kimi available** if you switch models or want Moonshot billing again. See **`BOOTSTRAP.md`** §3.1–3.2 for the full picture.
+
 ## 1. Add your API key
 
 Edit `.env` in this folder and replace `your-kimi-api-key-here` with your real Kimi API key (from https://platform.moonshot.ai/). No quotes needed:
@@ -36,10 +38,10 @@ launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.plist
 
 (After reboot you may need to run the `launchctl setenv` line again, or add it to your shell profile and run it before loading the agent.)
 
-## 3. Use Kimi in OpenClaw
+## 3. Use Kimi in OpenClaw (optional provider)
 
 - **Models available:** `moonshot/kimi-k2.5`, `moonshot/kimi-k2-turbo-preview`, `moonshot/kimi-k2-thinking`
-- **Set as default:** In OpenClaw config set `agents.defaults.model.primary` to `"moonshot/kimi-k2.5"`, or pick the model in the Control UI.
-- **Keep Ollama as default:** Leave primary as `ollama/qwen3-coder:30b` (or your current model) and choose Kimi only when you want it.
+- **Make Kimi the default again:** In `~/.openclaw/openclaw.json`, set `agents.defaults.model.primary` to `"moonshot/kimi-k2.5"` (or another `moonshot/kimi-*` id), or pick the model in the Control UI / `/model`.
+- **Use Kimi only sometimes:** Leave primary as **`openai-codex/gpt-5.4`** (or Ollama, etc.) and select a Moonshot model only when you want it for that session.
 
 Restart the gateway after any config change.
